@@ -20,7 +20,6 @@ import time
 import numpy as np
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.isotonic import IsotonicRegression
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix, f1_score
 from sklearn.model_selection import StratifiedGroupKFold, train_test_split
@@ -29,14 +28,12 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.svm import LinearSVC
 
 from common import OUT, SEED, load_ds2, save_json
+from politica import GRID, MIN_LANE, ece, local_accuracy, tau_marginal, tau_media, top2_hit, wilson
 
 TARGET = 0.90
 SENSITIVITY_TARGETS = (0.85, 0.95)
 CLASS_MIN_PRECISION = 0.85
 CLASS_MIN_SUPPORT = 20
-MIN_LANE = 50
-# A grade começava em 0,30 e o piso fixava os cortes (erro E6). Com 8 classes a confiança mínima é 0,125.
-GRID = np.round(np.arange(0.0, 0.996, 0.005), 3)
 
 t0 = time.time()
 df = load_ds2()
@@ -56,36 +53,7 @@ split_info = {k: int(m.sum()) for k, m in [("treino", is_train), ("validacao", i
 print(f"Divisão por grupos: {split_info}")
 
 
-# ------------------------------------------------------------------ métricas e políticas de corte
-def top2_hit(proba, y_true):
-    return (np.argsort(-proba, axis=1)[:, :2] == y_true[:, None]).any(1)
-
-
-def ece(proba, y_true, bins=15) -> float:
-    conf, correct = proba.max(1), proba.argmax(1) == y_true
-    edges = np.linspace(0, 1, bins + 1)
-    return float(sum(((conf > lo) & (conf <= hi)).mean() * abs(correct[(conf > lo) & (conf <= hi)].mean()
-                                                                   - conf[(conf > lo) & (conf <= hi)].mean())
-                     for lo, hi in zip(edges[:-1], edges[1:]) if ((conf > lo) & (conf <= hi)).any()))
-
-
-def tau_media(conf, hit, target, allowed=None) -> float | None:
-    """Pré-registrada: menor corte com precisão média da fila >= target."""
-    allowed = np.ones_like(hit, dtype=bool) if allowed is None else allowed
-    for tau in GRID:
-        m = (conf >= tau) & allowed
-        if m.sum() >= MIN_LANE and hit[m].mean() >= target:
-            return float(tau)
-    return None
-
-
-def tau_marginal(conf, hit, target) -> float | None:
-    """Corrigida: menor corte em que a taxa de acerto local (isotônica acerto ~ confiança) é >= target."""
-    iso = IsotonicRegression(increasing=True, out_of_bounds="clip", y_min=0, y_max=1).fit(conf, hit.astype(float))
-    ok = np.nonzero(iso.predict(GRID) >= target)[0]
-    return float(GRID[ok[0]]) if len(ok) else None
-
-
+# ------------------------------------------------------------------ políticas de corte
 def fit_policy(proba, y_true, kind: str, target=TARGET) -> dict:
     """Escolhe tau_auto, categorias elegíveis (C3) e tau_assist usando só os dados passados (validação)."""
     conf, pred = proba.max(1), proba.argmax(1)
@@ -139,20 +107,11 @@ def apply_policy(proba, y_true, pol) -> dict:
     }
 
 
-def wilson(hits: int, total: int, z=1.96) -> tuple[float, float]:
-    if total == 0:
-        return (float("nan"), float("nan"))
-    p, den = hits / total, 1 + z * z / total
-    center = (p + z * z / (2 * total)) / den
-    half = z * np.sqrt(p * (1 - p) / total + z * z / (4 * total * total)) / den
-    return float(center - half), float(center + half)
-
-
 def summary(proba, y_true) -> dict:
     pred, conf = proba.argmax(1), proba.max(1)
     out = {"acuracia": float(accuracy_score(y_true, pred)), "f1_macro": float(f1_score(y_true, pred, average="macro")),
            "ece": ece(proba, y_true)}
-    iso = IsotonicRegression(increasing=True, out_of_bounds="clip", y_min=0, y_max=1).fit(conf, (pred == y_true).astype(float))
+    iso = local_accuracy(conf, pred == y_true)
     for kind in ("media", "marginal"):
         pol = fit_policy(proba, y_true, kind)
         ok = pol["tau_auto"] is not None
@@ -243,7 +202,7 @@ leak = {"divisao_aleatoria": summary(clf_r.predict_proba(vec_r.transform(texts[i
 
 # ------------------------------------------------------------------ curvas para os gráficos (modelo escolhido)
 conf_v, hit_v = proba_val.max(1), proba_val.argmax(1) == y[is_val]
-iso = IsotonicRegression(increasing=True, out_of_bounds="clip", y_min=0, y_max=1).fit(conf_v, hit_v.astype(float))
+iso = local_accuracy(conf_v, hit_v)
 curve = {"grid": GRID.tolist(), "acerto_local_validacao": iso.predict(GRID).tolist(),
          "precisao_media_da_fila_validacao": [float(hit_v[conf_v >= t].mean()) if (conf_v >= t).sum() >= MIN_LANE else None for t in GRID],
          "cobertura_validacao": [float((conf_v >= t).mean()) for t in GRID]}

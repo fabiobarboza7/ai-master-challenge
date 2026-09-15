@@ -1,0 +1,79 @@
+{
+  "trava_de_dominio": {
+    "corte_fracao_de_palavras_conhecidas": 0.85,
+    "criterio": "percentil 1 da validação do Dataset 2 (perde no máximo ~1% do domínio de treino)",
+    "dataset2_teste_barrados": 0.010105323085681753,
+    "dataset2_teste_fila_auto_com_trava": 0.609735269000854,
+    "dataset1_barrados": 0.9526508442555202,
+    "dataset1_fila_auto_com_trava": 0.009446215609871295,
+    "dataset1_fila_auto_com_trava_e_regra_D3": 0.005667729365922777,
+    "quantis_conhecidas": {
+      "dataset2_validacao": {
+        "p1": 0.85,
+        "p5": 0.9285714285714286,
+        "p50": 1.0
+      },
+      "dataset1": {
+        "p50": 0.7647058823529411,
+        "p90": 0.8333333333333334,
+        "p99": 0.875
+      }
+    }
+  },
+  "dataset2_teste": {
+    "tickets": 7026,
+    "termos_ativos_por_ticket_mediana": 33.5,
+    "fracao_de_palavras_no_vocabulario_mediana": 1.0,
+    "confianca_quantis": {
+      "p10": 0.46229264747997645,
+      "p50": 0.8741013094982735,
+      "p90": 0.995339337566645
+    },
+    "fila_auto": 0.614289780814119,
+    "fila_assistida": 0.26387702818104186,
+    "fila_humana": 0.12183319100483916,
+    "categoria_prevista": {
+      "Hardware": 0.3309,
+      "HR Support": 0.2287,
+      "Miscellaneous": 0.1563,
+      "Access": 0.1433,
+      "Storage": 0.0457,
+      "Internal Project": 0.0364,
+      "Administrative rights": 0.0302,
+      "Purchase": 0.0285
+    }
+  },
+  "dataset1_descricoes": {
+    "tickets": 8469,
+    "termos_ativos_por_ticket_mediana": 38.0,
+    "fracao_de_palavras_no_vocabulario_mediana": 0.7647058823529411,
+    "confianca_quantis": {
+      "p10": 0.4369223694928967,
+      "p50": 0.6705059167027587,
+      "p90": 0.8880916091705716
+    },
+    "fila_auto": 0.286456488369347,
+    "fila_assistida": 0.5410319990553785,
+    "fila_humana": 0.17251151257527453,
+    "categoria_prevista": {
+      "Hardware": 0.8768,
+      "Access": 0.0716,
+      "Miscellaneous": 0.0257,
+      "Administrative rights": 0.0204,
+      "HR Support": 0.0037,
+      "Storage": 0.0014,
+      "Internal Project": 0.0004
+    }
+  },
+  "queda_de_cobertura_auto_pp": 32.7833292444772,
+  "regra_de_risco_D3": {
+    "fracao_reembolso_ou_cancelamento_pelo_tipo": 0.4070138150903294,
+    "fila_auto_antes_da_regra": 0.286456488369347,
+    "fila_auto_depois_da_regra": 0.16861494863620263,
+    "detector_por_palavra_chave": {
+      "fracao_de_descricoes_sinalizadas": 0.0227889951588145,
+      "recall_contra_o_tipo": 0.022628372497824196,
+      "sinalizadas_entre_os_demais_tipos": 0.022899243329350855
+    }
+  }
+}
