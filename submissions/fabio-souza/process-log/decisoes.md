@@ -14,7 +14,9 @@ Categorias de "quem decidiu":
 | D2 | 15/09 | Não versionar dados brutos: script de download com SHA-256 | IA | Reviews públicas criticam dados commitados; os dois datasets baixam sem credencial |
 | D3 | 15/09 | **Reembolso e cancelamento nunca são resolvidos pela IA sem aprovação humana** | **Fabio** | Pergunta feita antes de abrir os dados. Resposta: "Reembolso/cancelamento" |
 | D4 | 15/09 | Hipóteses de trabalho | IA (delegada) | Resposta do Fabio: "Descubra!". Hipóteses pré-registradas antes da análise |
-| D5 | 15/09 | Precisão mínima da fila automática | IA (delegada) | Resposta do Fabio: "Decida por mim". A regra de escolha será fixada **antes** de olhar o conjunto de teste |
+| D5 | 15/09 | Precisão mínima da fila automática: 90% | IA (delegada) | Resposta do Fabio: "Decida por mim". Modelo de custo: rotear errado custa ~4× a triagem, o que dá empate em 80%; mais 10 pontos de margem para mudança de domínio. Fixado antes de treinar |
+| D6 | 15/09 | Trocar a regra de corte de "precisão média da fila ≥ 90%" para "acerto **local** ≥ 90% para cada ticket da fila" | IA (delegada) | Erro E7: a regra média põe na fila automática tickets que acertam 0–52%. Decidido olhando só a validação; o teste foi avaliado para as duas regras. **Levado ao Fabio para confirmação no checkpoint 2** |
+| D7 | 15/09 | Modelo: TF-IDF (1–2 gramas, 20 mil termos) + regressão logística (C = 2) | IA | Maior cobertura pela regra marginal na validação (64,6%). SVM e Naive Bayes perdem; o modelo cabe no navegador (~20 mil termos) |
 
 ## Respostas literais do Fabio às perguntas iniciais (15/09, ~16:05)
 
