@@ -1,113 +1,29 @@
 # Diário de bordo
 
-Registro cronológico, escrito durante o trabalho (não reconstruído no final).
-Horários em BRT (UTC−3), lidos do log local do Claude Code.
+Escrito durante o trabalho, não reconstruído no fim. Horários em BRT (UTC−3), lidos do log local do Claude Code.
 
-**Quem é quem neste log**
-- **Fabio** — candidato.
-- **IA** — Claude Code rodando Claude Opus 5, o agente que executou a análise e o código.
-- **Revisor-IA** — um segundo modelo, chamado pelo agente para auditar o próprio raciocínio em pontos de decisão.
+**Quem é quem:** **Fabio**, o candidato · **IA**, o Claude Code (Opus 5) que executou a análise e o código · **Revisor-IA**, um segundo modelo chamado pela IA para auditar o próprio raciocínio.
 
 ---
 
-## 15/09 15:30 — Escolha do desafio
+**15:30 — Escolha do desafio.** Pedido do Fabio: *"me diga qual projeto temos maior chances?"* A IA leu as regras e descobriu que os PRs dos outros candidatos e as reviews do avaliador são públicos; baixou os 124 PRs e ~200 comentários para entender o critério real de aprovação (E1 corrigiu a métrica). Recomendação: **002**, maior taxa de aprovação na 1ª review (68%) e o que mais encaixa num perfil de dev. Decisão do Fabio: seguir com o 002.
 
-Pedido do Fabio: *"leia atentamente os requisitos da vaga, as regras e etc, e me diga qual projeto temos maior chances?"*
+> Ler as reviews mostrou problemas de dados que outros candidatos já tinham levantado. Aqui eles são **alegações a verificar**, nunca fatos: todo número deste repositório foi recalculado dos CSVs originais. Nenhum código ou texto de outro candidato foi usado.
 
-- A IA leu o README, as regras, o guia de submissão, o template e os 4 desafios.
-- Descobriu que os PRs de outros candidatos, e as reviews do avaliador, são públicos.
-- Via GitHub API, baixou os 124 PRs e os ~200 comentários do avaliador para entender o critério real de aprovação.
-- **Erro da IA:** a primeira taxa de aprovação por desafio contava "PR parado aguardando ajuste" como reprovação. O Revisor-IA apontou o problema de denominador. A IA trocou a métrica por "aprovado na 1ª review": 001 = 29%, 002 = 68%, 003 = 48%, 004 = 57%.
-- Recomendação: **002**. Tem a maior aprovação com amostra razoável, pede protótipo (encaixa no perfil de dev) e é o desafio mais próximo da descrição da vaga.
+**15:53 — Começo.** Branch criada, datasets baixando do endpoint público do Kaggle com conferência de SHA-256. Armadilha: o `.gitignore` do repositório ignora `submissions/`, então é preciso `git add -f` — e o `-f` desliga *todos* os ignores, `node_modules` inclusive. Resolvido com um script de stage que bloqueia o commit se algo proibido aparecer (E2).
 
-**Transparência:** ler as reviews públicas mostrou problemas nos dados que outros candidatos já tinham levantado (CSAT aleatório, timestamps invertidos). Neste trabalho eles são tratados como **alegações a verificar**, nunca como fatos. Todo número deste repositório foi recalculado a partir dos CSVs originais pelos scripts em `solution/analysis/`. Nenhum código ou texto de outros candidatos foi usado.
+**16:01–16:06 — Checkpoint 1: o Fabio decide antes dos dados.** Quatro perguntas, e a IA parou até as respostas. Ele fixou que **reembolso e cancelamento nunca são resolvidos sem uma pessoa** (D3) e delegou explicitamente duas coisas: as hipóteses (*"Descubra!"*) e a precisão mínima (*"Decida por mim"*). Com a delegação por escrito, a IA **pré-registrou** as hipóteses antes de rodar qualquer análise. Nesse momento os arquivos estavam baixados, mas nenhuma coluna tinha sido lida: a primeira inspeção de conteúdo é das 16:07.
 
-## 15/09 15:53 — Início do desafio 002
+**16:10–16:18 — Auditoria dos dois datasets.** Cada alegação pública sobre o Dataset 1 se confirmou: sem data de abertura, tudo cabendo em 27 h, 49,3% das resoluções antes da primeira resposta, nota de satisfação uniforme. Dois achados que as reviews não citavam: **tipo e assunto são sorteados independentes**, e **o texto não prevê nem tipo nem assunto**. No Dataset 2, 12,3% dos tickets têm quase-duplicado — o maior grupo são 976 pedidos de compra idênticos. **Antes de treinar**, o critério de escolha do modelo foi fixado por escrito. Dois erros estatísticos pegos aqui (E3, E4).
 
-Pedido do Fabio: *"Va em frente! O importante e atingir o objetivo de eu ser aprovado para a vaga de emprego. Faca o seu melhor!"*
+**16:20–16:35 — Classificador e mudança de domínio.** O problema sério apareceu na segunda rodada: a regra que a própria IA tinha pré-registrado aceitava tickets que acertam 0–52% (E7). Trocada por acerto **por ticket**, com o desvio documentado. Resultado no teste: **61,4% automáticos com 96,4% certos**. Aplicado ao Dataset 1, o modelo manda 88% para Hardware — a trava de vocabulário barra 41% disso, não os 95% reportados a princípio (E9).
 
-- A IA clonou o repositório e criou a branch `submission/fabio-souza`.
-- Os dois datasets baixam do endpoint público do Kaggle sem credencial. O script `solution/data/download.sh` confere o SHA-256.
-- **Armadilha encontrada pela IA:** o `.gitignore` raiz do repositório ignora `submissions/`. Por isso é preciso `git add -f`, e o `-f` desliga *todos* os ignores, inclusive `node_modules`.
-  - A primeira tentativa de filtro da IA (`git ls-files --exclude-from`) não listava nenhum arquivo. Foi detectado num teste com um `node_modules` falso antes de qualquer commit.
-  - Solução final: um script de stage que percorre a pasta com uma lista de exclusão explícita e **bloqueia o commit** se houver dependências, dados brutos, `.env`, arquivo acima de 3 MB ou alteração fora da pasta.
+**16:36–16:41 — Checkpoint 2: o Fabio decide com os números na mão.** Precisão de 90% por ticket, regra por ticket em vez da média, IA só roteia em acesso e RH, R$ 35/h. As três primeiras seguiram a recomendação da IA; o custo/hora foi escolha dele, e a mais conservadora das três opções (D8–D11).
 
-## 15/09 16:01–16:06 — Checkpoint 1: decisões do Fabio antes de abrir os dados
+**16:44–16:52 — ROI.** Função paramétrica com a origem declarada de cada insumo: 34,7 h/mês na base do brief. O Revisor-IA pediu para conferir penalidade dupla e ela existia (E10): o empate real é 75%, não 80%.
 
-A IA fez 4 perguntas às 16:01 e parou até as respostas, que chegaram às 16:06. As perguntas e as respostas literais estão em [`decisoes.md`](decisoes.md).
+**17:00–19:15 — Protótipo.** Construído sobre o scaffold Next.js do Fabio. Modelo exportado com 3 casas decimais, com filas 100% iguais às do modelo completo, e **258 testes** de paridade Python ↔ TypeScript. A verificação visual em celular e modo escuro achou dois defeitos sérios: a página com 6.942 px de largura (E11) e o gráfico escondendo justamente os erros que ele existe para mostrar (E12).
 
-- Hipóteses sobre onde a operação perde tempo: *"Descubra!"*. O Fabio delegou a formulação à IA.
-- O que nunca automatizar: **reembolso/cancelamento**.
-- Precisão mínima da fila automática: *"Decida por mim"*. Também delegado.
+**19:15–19:50 — Reprodução e conferência.** Num clone novo, `run_all.sh` rodou em 2 min 36 s com saídas idênticas byte a byte, exceto o ECE do SVM na 9ª casa decimal. Depois, cada número dos documentos foi conferido contra o JSON que ele cita: dois não batiam (E15).
 
-Com essa delegação, a IA **pré-registrou** as hipóteses por escrito antes de rodar qualquer análise, em [`hipoteses-pre-registradas.md`](hipoteses-pre-registradas.md). Assim os resultados não podem ser ajustados para caber numa narrativa escolhida depois.
-
-## 15/09 16:10–16:18 — Auditorias dos dois datasets
-
-**Dataset 1.** Cada alegação pública foi conferida com código, e todas se confirmaram:
-- não há data de abertura; todas as respostas cabem em 27 h;
-- 49,3% das resoluções vêm antes da primeira resposta;
-- a nota de satisfação é uniforme e nada a explica;
-- 100% das descrições têm o placeholder `{product_purchased}`.
-
-Dois achados que as reviews públicas não citavam:
-- **Tipo e assunto são sorteados independentes.** O assunto "Refund request" tem o tipo "Refund request" em 20,7% dos casos, o esperado por acaso.
-- **O texto do Dataset 1 não prevê nem tipo nem assunto.**
-
-A revisão da própria saída pegou dois erros estatísticos (E3, E4).
-
-**Dataset 2.** 12,3% dos tickets têm quase-duplicado. O maior grupo são 976 pedidos de compra idênticos. Pares quase iguais com rótulos diferentes mostram que a taxonomia se sobrepõe. **Antes de treinar**, o critério de escolha do modelo foi fixado no Adendo 1 da pré-registração.
-
-## 15/09 16:20–16:35 — Classificador e mudança de domínio
-
-- **Primeira rodada:** os cortes caíram no piso arbitrário da grade (E6).
-- **Grade corrigida:** apareceu o problema maior (E7). A regra "precisão média ≥ 90%", que a própria IA tinha pré-registrado, aceitava tickets de 0–52% de acerto local. A regra virou "acerto ≥ 90% por ticket" (regressão isotônica); o desvio foi documentado e o teste avaliado para as duas regras.
-- **Resultado:** regressão logística com 20 mil termos. No teste, 61,4% automáticos com 96,4% certos. A divisão aleatória superestimaria a acurácia em 1,8 ponto.
-- **Aplicado ao Dataset 1:** o modelo manda 88% para Hardware, e 28,6% passariam na fila automática. Uma trava de vocabulário foi criada. Ela chegou a ser reportada barrando 95%; o número real, depois de alinhar a tokenização com o app, é 41% (E9).
-- **Curva de aprendizado:** 5 mil tickets rotulados dão ~40% de fila automática.
-
-## 15/09 16:36–16:41 — Checkpoint 2: decisões de negócio do Fabio
-
-Com os resultados em mãos, o Fabio escolheu:
-- 90% de precisão por ticket;
-- a regra por ticket, e não a média;
-- acesso e RH: a IA só roteia;
-- R$ 35/h.
-
-As três primeiras seguiram a recomendação da IA; o custo/hora foi escolha própria. Respostas literais em [`decisoes.md`](decisoes.md) (D8–D11).
-
-## 15/09 16:44–16:52 — ROI
-
-- **Base:** função paramétrica com a origem de cada insumo; 34,7 h/mês na base do brief.
-- **Erro E10:** o Revisor-IA pediu para conferir penalidade dupla, e ela existia. O empate real é 75%, não 80%.
-- **Erro E13:** o cenário otimista usava R$ 50/h, contrariando a decisão do Fabio.
-- **Testes:** 10 testes Python cobrem os bugs E7, E9 e E10.
-
-## 15/09 17:00–19:15 — Protótipo
-
-- **Base:** o scaffold Next.js + shadcn que o Fabio já tinha criado, com os componentes shadcn não usados removidos.
-- **Exportação e paridade:** modelo exportado com 3 casas decimais (filas 100% iguais ao modelo completo). 245 casos de paridade Python ↔ TypeScript e backtest com contagens idênticas: 258 testes.
-- **Verificação visual** com capturas em desktop, celular e modo escuro:
-  - a página tinha 6.942 px de largura no celular (E11);
-  - o gráfico escondia os erros que existia para mostrar (E12).
-- **Ferramental:** o ESLint do template quebrava por incompatibilidade entre ESLint 10 e `eslint-plugin-react`; resolvido fixando a versão do React na configuração.
-
-## 15/09 19:15–19:30 — Reprodutibilidade e documentação
-
-- **`run_all.sh`:** uma leitura antes de rodar achou uma pasta inexistente em clone limpo (E14). Depois, num clone novo do branch, o script rodou tudo em 2 min 36 s, com saídas idênticas byte a byte, exceto o ECE do SVM na 9ª casa decimal.
-- **Documentação:** diagnóstico, proposta de automação com piloto, ficha do modelo e README no template.
-
-## 15/09 19:30–19:50 — Conferência final
-
-- Cada número dos documentos foi conferido contra o JSON que ele cita, relendo os arquivos por script. Dois não batiam (E15): o README dizia "treinado em 47.837 tickets" e "testado em 7.026 que nunca viu", sendo que os 7.026 **fazem parte** dos 47.837; e a tabela de candidatos dava ao modelo escolhido um F1 de 0,85, quando o valor é 0,844.
-- A tabela de candidatos também mostrava 7 dos 10 modelos comparados. Passou a mostrar os 10, com uma linha dizendo que o escolhido **não** é o melhor em acurácia nem em F1 — ele é o melhor no critério pré-registrado.
-- Os horários dos checkpoints foram acertados pelo log (16:01–16:06 e 16:36–16:41), no lugar das aproximações escritas durante o trabalho.
-
-## 15/09 19:54 — Checkpoint 3: decisões de operação
-
-A IA listou o que ainda estava decidido por ela e que, por ser decisão de negócio, cabia ao Fabio. Cada pergunta veio com o efeito numérico das alternativas. O Fabio decidiu três e devolveu uma.
-
-- **Critério do piloto:** manter ≥ 95% de acerto e ≤ 5% de correção humana (D13).
-- **Falsos positivos da regra por palavra-chave:** aceitos, para errar do lado seguro (D14).
-- **Ordem de execução:** formulário de compras antes da triagem (D15).
-- **Custo do erro (4× a triagem):** *"escolha o que faz mais sentido"* — delegado de volta à IA, que manteve 4× e registrou o porquê (D12).
+**19:54 — Checkpoint 3: as decisões de operação voltam para o Fabio.** A IA listou o que ainda estava decidido por ela e que, por ser decisão de negócio, cabia a ele. Ele decidiu o critério do piloto (D13), aceitou o custo dos falsos positivos da regra de risco (D14) e fixou a ordem de execução, formulário antes da triagem (D15). O múltiplo do custo do erro ele devolveu para a IA, que manteve 4× e registrou o porquê (D12). O Revisor-IA leu a versão final e achou uma afirmação invertida na seção do candidato (E16).

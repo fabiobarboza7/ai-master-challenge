@@ -118,15 +118,11 @@ A reprodução foi verificada num clone limpo do branch. Todas as saídas saíra
 
 ### Onde a IA errou e como corrigi
 
-Dezesseis erros reais, todos documentados com evidência em [`process-log/erros-da-ia.md`](process-log/erros-da-ia.md). Os mais relevantes:
+Dezesseis, todos com evidência em [`process-log/erros-da-ia.md`](process-log/erros-da-ia.md): oito mudaram uma conclusão, oito foram pegos antes de virarem problema. Os três que mais custariam:
 
-- **E7 — a regra que a própria IA pré-registrou era falha.** "Precisão média ≥ 90%" aceitava tickets que acertam 0–52%, escondidos na média. Foi trocada por uma regra por ticket; o desvio está documentado e as duas regras aparecem nos resultados.
-- **E9 — número inflado.** A trava de domínio foi reportada barrando 95% do texto estranho, inclusive numa mensagem de commit. O certo era 41%; a correção está num commit explícito.
-- **E10 — ROI com erro contado duas vezes.** O ponto de empate real é 75%, não 80%.
-- **E3/E4 — testes estatísticos mal aplicados.** KS em variável discreta e V de Cramér enviesado teriam gerado falsos achados.
-- **E11 — protótipo quebrado no celular.** A página tinha 6.942 px de largura; foi pego pela verificação visual antes do commit.
-- **E15 — número escrito à mão que não batia com o JSON.** Este README dizia "treinado em 47.837 tickets" e "testado em 7.026 que nunca viu", sendo que os 7.026 fazem parte dos 47.837. Pego na conferência final de cada número contra a sua fonte.
-- **E16 — o texto desta seção dizia o contrário do número.** A IA escreveu que o critério do piloto era mais exigente que o teste; exigir ≥ 95% quando o teste mediu 96,4% é o oposto. Pego pelo Revisor-IA na última leitura, já com tudo commitado.
+- **E7 — a regra que a própria IA pré-registrou era falha.** "Precisão média ≥ 90%" aceitava tickets que acertam 0–52%, escondidos na média. Virou uma regra por ticket, e o desvio foi levado a mim para confirmar em vez de ser corrigido em silêncio.
+- **E9 — número inflado.** A trava de domínio foi reportada barrando 95% do texto estranho, inclusive numa mensagem de commit. O certo é 41%, e a correção está num commit explícito.
+- **E10 — ROI com o erro contado duas vezes.** Achado pelo segundo modelo. O ponto de empate real é 75%, não 80%.
 
 ### O que eu adicionei que a IA sozinha não faria
 
