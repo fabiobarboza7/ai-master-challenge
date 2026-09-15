@@ -1,5 +1,9 @@
 {
-  "formula": "horas/mês = tickets/mês × (1 − fração reembolso/cancelamento) × [fila_auto × (precisão × t − (1 − precisão) × k × t) + fila_assistida × (top2 × (t − c) − (1 − top2) × c)] / 60; t = min de triagem manual, k = múltiplo do custo de erro, c = min de confirmação",
+  "formula": "horas/mês = tickets/mês × (1 − fração reembolso/cancelamento) × [fila_auto × (t − (1 − precisão) × k × t) + fila_assistida × (top2 × (t − c) − (1 − top2) × c)] / 60; t = min de triagem manual, k = múltiplo do custo de erro, c = min de confirmação",
+  "ponto_de_empate_da_fila_auto": {
+    "precisao_minima": 0.75,
+    "nota": "Abaixo desta precisão, a fila automática custa mais do que economiza (com k = 4, 75%)."
+  },
   "parametros": {
     "tickets_por_mes": {
       "valor": 2500.0,
@@ -81,14 +85,14 @@
     "tickets_elegiveis_mes": 1482.5,
     "tickets_auto_mes": 903.932536293766,
     "tickets_assistidos_mes": 386.34464844861947,
-    "min_liquidos_por_ticket_auto": 1.6451914098972924,
+    "min_liquidos_por_ticket_auto": 1.716153127917834,
     "min_liquidos_por_ticket_assistido": 1.3787547788093937,
-    "horas_mes": 33.6636095692191,
-    "horas_mes_fila_auto": 24.785700730619606,
+    "horas_mes": 34.73268633172028,
+    "horas_mes_fila_auto": 25.85477749312079,
     "horas_mes_fila_assistida": 8.877908838599488,
-    "fte": 0.21039755980761937,
-    "brl_mes": 1178.2263349226685,
-    "brl_ano": 14138.716019072022
+    "fte": 0.21707928957325176,
+    "brl_mes": 1215.6440216102098,
+    "brl_ano": 14587.728259322517
   },
   "sensibilidade": [
     {
@@ -98,9 +102,9 @@
         1.0,
         4.0
       ],
-      "horas_mes_no_minimo": 15.222035416073632,
-      "horas_mes_no_maximo": 70.54675787551001,
-      "amplitude": 55.32472245943638
+      "horas_mes_no_minimo": 15.756573797324226,
+      "horas_mes_no_maximo": 72.68491140051239,
+      "amplitude": 56.92833760318817
     },
     {
       "parametro": "tickets_por_mes",
@@ -109,9 +113,9 @@
         1500.0,
         4000.0
       ],
-      "horas_mes_no_minimo": 20.198165741531458,
-      "horas_mes_no_maximo": 53.861775310750545,
-      "amplitude": 33.66360956921909
+      "horas_mes_no_minimo": 20.83961179903217,
+      "horas_mes_no_maximo": 55.57229813075244,
+      "amplitude": 34.732686331720274
     },
     {
       "parametro": "fracao_reembolso_cancelamento",
@@ -120,9 +124,9 @@
         0.2,
         0.5
       ],
-      "horas_mes_no_minimo": 45.41465034633267,
-      "horas_mes_no_maximo": 28.38415646645792,
-      "amplitude": 17.03049387987475
+      "horas_mes_no_minimo": 46.85691242053326,
+      "horas_mes_no_maximo": 29.28557026283329,
+      "amplitude": 17.571342157699974
     },
     {
       "parametro": "multiplo_custo_erro",
@@ -131,9 +135,9 @@
         2.0,
         8.0
       ],
-      "horas_mes_no_minimo": 35.801763094221464,
-      "horas_mes_no_maximo": 29.38730251921435,
-      "amplitude": 6.414460575007112
+      "horas_mes_no_minimo": 36.870839856722654,
+      "horas_mes_no_maximo": 30.456379281715538,
+      "amplitude": 6.414460575007116
     },
     {
       "parametro": "min_confirmacao_assistida",
@@ -142,9 +146,9 @@
         0.25,
         1.0
       ],
-      "horas_mes_no_minimo": 35.273378937755005,
-      "horas_mes_no_maximo": 30.444070832147265,
-      "amplitude": 4.8293081056077405
+      "horas_mes_no_minimo": 36.342455700256195,
+      "horas_mes_no_maximo": 31.51314759464845,
+      "amplitude": 4.829308105607744
     }
   ],
   "cenarios": {
@@ -165,14 +169,14 @@
       "tickets_elegiveis_mes": 750.0,
       "tickets_auto_mes": 457.30145175064047,
       "tickets_assistidos_mes": 195.45260461144323,
-      "min_liquidos_por_ticket_auto": 0.6806722689075632,
+      "min_liquidos_por_ticket_auto": 0.7161531279178339,
       "min_liquidos_por_ticket_assistido": -0.06062261059530316,
-      "horas_mes": 4.990392826643895,
-      "horas_mes_fila_auto": 5.1878736122971825,
+      "horas_mes": 5.260816965556504,
+      "horas_mes_fila_auto": 5.458297751209793,
       "horas_mes_fila_assistida": -0.19748078565328797,
-      "fte": 0.03118995516652434,
-      "brl_mes": 174.66374893253632,
-      "brl_ano": 2095.9649871904357
+      "fte": 0.03288010603472815,
+      "brl_mes": 184.12859379447764,
+      "brl_ano": 2209.5431255337317
     },
     "otimista": {
       "parametros": {
@@ -191,14 +195,14 @@
       "tickets_elegiveis_mes": 3200.0,
       "tickets_auto_mes": 1951.1528608027327,
       "tickets_assistidos_mes": 833.9311130088245,
-      "min_liquidos_por_ticket_auto": 3.574229691876751,
+      "min_liquidos_por_ticket_auto": 3.716153127917834,
       "min_liquidos_por_ticket_assistido": 3.5075095576187874,
-      "horas_mes": 164.98149729575863,
-      "horas_mes_fila_auto": 116.2311414745232,
+      "horas_mes": 169.5967359332005,
+      "horas_mes_fila_auto": 120.84638011196509,
       "horas_mes_fila_assistida": 48.750355821235416,
-      "fte": 1.0311343580984915,
-      "brl_mes": 5774.352405351552,
-      "brl_ano": 69292.22886421862
+      "fte": 1.0599795995825032,
+      "brl_mes": 5935.885757662018,
+      "brl_ano": 71230.62909194421
     }
   },
   "rotulagem": {
@@ -207,58 +211,58 @@
       {
         "tickets_rotulados": 500,
         "fila_auto": 0.15082076098301547,
-        "horas_mes_so_fila_auto": 5.3325829312172885,
-        "brl_mes_so_fila_auto": 186.64040259260508,
+        "horas_mes_so_fila_auto": 5.756678199355968,
+        "brl_mes_so_fila_auto": 201.48373697745888,
         "custo_rotulagem_brl": 145.83333333333334,
-        "meses_para_pagar_rotulagem": 0.7813599376532391
+        "meses_para_pagar_rotulagem": 0.7237970444713786
       },
       {
         "tickets_rotulados": 1000,
         "fila_auto": 0.25016604990985863,
-        "horas_mes_so_fila_auto": 9.424749124776632,
-        "brl_mes_so_fila_auto": 329.8662193671821,
+        "horas_mes_so_fila_auto": 10.01227375976374,
+        "brl_mes_so_fila_auto": 350.42958159173094,
         "custo_rotulagem_brl": 291.6666666666667,
-        "meses_para_pagar_rotulagem": 0.8841968335715075
+        "meses_para_pagar_rotulagem": 0.8323117738572476
       },
       {
         "tickets_rotulados": 2000,
         "fila_auto": 0.338599487617421,
-        "horas_mes_so_fila_auto": 13.227372784193902,
-        "brl_mes_so_fila_auto": 462.95804744678657,
+        "horas_mes_so_fila_auto": 13.928389829973964,
+        "brl_mes_so_fila_auto": 487.49364404908874,
         "custo_rotulagem_brl": 583.3333333333334,
-        "meses_para_pagar_rotulagem": 1.2600133782108691
+        "meses_para_pagar_rotulagem": 1.196596797628389
       },
       {
         "tickets_rotulados": 5000,
         "fila_auto": 0.3976658126957016,
-        "horas_mes_so_fila_auto": 16.956918206269826,
-        "brl_mes_so_fila_auto": 593.4921372194439,
+        "horas_mes_so_fila_auto": 17.495798347158377,
+        "brl_mes_so_fila_auto": 612.3529421505432,
         "custo_rotulagem_brl": 1458.3333333333333,
-        "meses_para_pagar_rotulagem": 2.457207504324719
+        "meses_para_pagar_rotulagem": 2.381524171684001
       },
       {
         "tickets_rotulados": 10000,
         "fila_auto": 0.4684505171268622,
-        "horas_mes_so_fila_auto": 20.008692941645144,
-        "brl_mes_so_fila_auto": 700.30425295758,
+        "horas_mes_so_fila_auto": 20.636806964253267,
+        "brl_mes_so_fila_auto": 722.2882437488644,
         "custo_rotulagem_brl": 2916.6666666666665,
-        "meses_para_pagar_rotulagem": 4.164856423973966
+        "meses_para_pagar_rotulagem": 4.0380923985809405
       },
       {
         "tickets_rotulados": 20000,
         "fila_auto": 0.5732991744947339,
-        "horas_mes_so_fila_auto": 23.446873234634023,
-        "brl_mes_so_fila_auto": 820.6405632121908,
+        "horas_mes_so_fila_auto": 24.423605428963505,
+        "brl_mes_so_fila_auto": 854.8261900137227,
         "custo_rotulagem_brl": 5833.333333333333,
-        "meses_para_pagar_rotulagem": 7.108268339186426
+        "meses_para_pagar_rotulagem": 6.82399931293599
       },
       {
         "tickets_rotulados": 32889,
         "fila_auto": 0.614289780814119,
-        "horas_mes_so_fila_auto": 24.870101527659173,
-        "brl_mes_so_fila_auto": 870.453553468071,
+        "horas_mes_so_fila_auto": 25.967311889173548,
+        "brl_mes_so_fila_auto": 908.8559161210742,
         "custo_rotulagem_brl": 9592.625,
-        "meses_para_pagar_rotulagem": 11.020260600673009
+        "meses_para_pagar_rotulagem": 10.554615786560065
       }
     ]
   },

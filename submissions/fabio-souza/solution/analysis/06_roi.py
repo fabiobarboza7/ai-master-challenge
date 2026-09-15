@@ -15,6 +15,7 @@ import numpy as np
 
 from common import OUT, load_ds2, save_json
 from politica import top2_hit
+from roi import monthly_savings
 from texto import known_share, normalize
 
 state = pickle.load(open(OUT / "cache" / "modelo_escolhido.pkl", "rb"))
@@ -54,24 +55,6 @@ P = {
                        "nota": "Salário + encargos de atendente júnior. Decisão do candidato: fixa em todos os cenários."},
     "horas_produtivas_por_fte_mes": {"valor": 160.0, "origem": "PREMISSA", "nota": "Horas produtivas de uma pessoa em tempo integral."},
 }
-
-
-def monthly_savings(p: dict) -> dict:
-    """Minutos/mês = tickets elegíveis x [fila auto x ganho líquido auto + fila assistida x ganho líquido assistida]."""
-    v = {k: x["valor"] if isinstance(x, dict) else x for k, x in p.items()}
-    eligible = v["tickets_por_mes"] * (1 - v["fracao_reembolso_cancelamento"])
-    t = v["min_triagem_manual"]
-    net_auto = v["precisao_auto"] * t - (1 - v["precisao_auto"]) * v["multiplo_custo_erro"] * t
-    net_assist = v["top2_assistida"] * (t - v["min_confirmacao_assistida"]) - (1 - v["top2_assistida"]) * v["min_confirmacao_assistida"]
-    minutes_auto = eligible * v["fila_auto"] * net_auto
-    minutes_assist = eligible * v["fila_assistida"] * net_assist
-    hours = (minutes_auto + minutes_assist) / 60
-    return {"tickets_elegiveis_mes": eligible, "tickets_auto_mes": eligible * v["fila_auto"],
-            "tickets_assistidos_mes": eligible * v["fila_assistida"],
-            "min_liquidos_por_ticket_auto": net_auto, "min_liquidos_por_ticket_assistido": net_assist,
-            "horas_mes": hours, "horas_mes_fila_auto": minutes_auto / 60, "horas_mes_fila_assistida": minutes_assist / 60,
-            "fte": hours / v["horas_produtivas_por_fte_mes"], "brl_mes": hours * v["custo_hora_brl"],
-            "brl_ano": 12 * hours * v["custo_hora_brl"]}
 
 
 base = monthly_savings(P)
@@ -133,8 +116,10 @@ levers = {
 
 save_json(OUT / "06_roi.json", {
     "formula": ("horas/mês = tickets/mês × (1 − fração reembolso/cancelamento) × "
-                "[fila_auto × (precisão × t − (1 − precisão) × k × t) + fila_assistida × (top2 × (t − c) − (1 − top2) × c)] / 60; "
+                "[fila_auto × (t − (1 − precisão) × k × t) + fila_assistida × (top2 × (t − c) − (1 − top2) × c)] / 60; "
                 "t = min de triagem manual, k = múltiplo do custo de erro, c = min de confirmação"),
+    "ponto_de_empate_da_fila_auto": {"precisao_minima": 1 - 1 / P["multiplo_custo_erro"]["valor"],
+                                     "nota": "Abaixo desta precisão, a fila automática custa mais do que economiza (com k = 4, 75%)."},
     "parametros": P, "base": base, "sensibilidade": tornado, "cenarios": scenarios,
     "rotulagem": {"min_por_rotulo_premissa": MIN_PER_LABEL, "por_volume": labeling},
     "alavancas_adicionais": levers,
