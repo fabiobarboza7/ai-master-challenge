@@ -1,0 +1,25 @@
+# Dependências e ambientes
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.next/
+out/
+dist/
+coverage/
+.vercel/
+*.tsbuildinfo
+next-env.d.ts
+
+# Dados brutos do Kaggle: baixados por solution/data/download.sh, nunca versionados
+solution/data/raw/
+
+# Segredos
+.env
+.env.*
+!.env.example
+
+# SO / editores / logs
+.DS_Store
+*.log
