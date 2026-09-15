@@ -3,7 +3,7 @@
 ## Sobre mim
 
 - **Nome:** Fabio Souza
-- **LinkedIn:** {{LINKEDIN}}
+- **LinkedIn:** [linkedin.com/in/fabiobarboza7](https://www.linkedin.com/in/fabiobarboza7/)
 - **Challenge escolhido:** 002 — Redesign de Suporte
 
 ---
