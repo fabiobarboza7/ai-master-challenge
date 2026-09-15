@@ -118,7 +118,7 @@ A reprodução foi verificada num clone limpo do branch. Todas as saídas saíra
 
 ### Onde a IA errou e como corrigi
 
-Quinze erros reais, todos documentados com evidência em [`process-log/erros-da-ia.md`](process-log/erros-da-ia.md). Os mais relevantes:
+Dezesseis erros reais, todos documentados com evidência em [`process-log/erros-da-ia.md`](process-log/erros-da-ia.md). Os mais relevantes:
 
 - **E7 — a regra que a própria IA pré-registrou era falha.** "Precisão média ≥ 90%" aceitava tickets que acertam 0–52%, escondidos na média. Foi trocada por uma regra por ticket; o desvio está documentado e as duas regras aparecem nos resultados.
 - **E9 — número inflado.** A trava de domínio foi reportada barrando 95% do texto estranho, inclusive numa mensagem de commit. O certo era 41%; a correção está num commit explícito.
@@ -126,18 +126,21 @@ Quinze erros reais, todos documentados com evidência em [`process-log/erros-da-
 - **E3/E4 — testes estatísticos mal aplicados.** KS em variável discreta e V de Cramér enviesado teriam gerado falsos achados.
 - **E11 — protótipo quebrado no celular.** A página tinha 6.942 px de largura; foi pego pela verificação visual antes do commit.
 - **E15 — número escrito à mão que não batia com o JSON.** Este README dizia "treinado em 47.837 tickets" e "testado em 7.026 que nunca viu", sendo que os 7.026 fazem parte dos 47.837. Pego na conferência final de cada número contra a sua fonte.
+- **E16 — o texto desta seção dizia o contrário do número.** A IA escreveu que o critério do piloto era mais exigente que o teste; exigir ≥ 95% quando o teste mediu 96,4% é o oposto. Pego pelo Revisor-IA na última leitura, já com tudo commitado.
 
 ### O que eu adicionei que a IA sozinha não faria
 
 Nada de código. O que eu fiz foi decidir onde a IA não manda, e a que horas — está em [`decisoes.md`](process-log/decisoes.md), com quem decidiu marcado linha a linha.
 
-**Os limites vieram antes dos dados.** Às 16:06, antes de a IA abrir qualquer CSV, respondi que reembolso e cancelamento nunca são resolvidos sem uma pessoa. Por isso essa regra roda **antes** do classificador no fluxo, e não como exceção acrescentada depois. Decidida na ordem inversa, ela teria saído da capacidade do modelo, e não do risco do negócio — e a diferença aparece na regra por palavra-chave: ela manda 0,7% dos tickets de TI para humano à toa, e eu aceitei esse custo em vez de confiar só no campo de tipo, que o cliente preenche errado.
+**Os limites vieram antes dos dados.** Respondi às 16:06 que reembolso e cancelamento nunca são resolvidos sem uma pessoa. Os arquivos já estavam baixados, mas nenhuma coluna tinha sido lida: a primeira inspeção de conteúdo no log é das 16:07. Por isso essa regra roda **antes** do classificador no fluxo, e não como exceção acrescentada depois. Decidida na ordem inversa, ela teria saído da capacidade do modelo, e não do risco do negócio — e a diferença aparece na regra por palavra-chave: ela manda 0,7% dos tickets de TI para humano à toa, e eu aceitei esse custo em vez de confiar só no campo de tipo, que o cliente preenche errado.
 
 **Deleguei de propósito o que eu não tinha base para decidir.** Perguntado onde a operação perde tempo, respondi *"Descubra!"*. Sobre a precisão mínima da fila automática, *"Decida por mim"*. Um palpite meu ali viraria a hipótese que a análise tentaria confirmar. Em compensação, nada foi decidido no meio do caminho: as hipóteses estão pré-registradas em commit anterior aos resultados que elas governam, e quando a IA descobriu que a regra que ela mesma tinha pré-registrado era falha (E7), o desvio veio para mim aprovar, em vez de ser corrigido em silêncio.
 
-**Com os números na mão, escolhi o lado conservador três vezes.** R$ 35/h em vez de R$ 50/h, sem recomendação da IA para nenhum dos dois: com o valor maior, a economia anunciada subiria 43% sem um minuto a mais de ganho real. Em acesso e RH, a IA só roteia; conceder continua com uma pessoa. E no piloto, fiquei com o critério mais exigente do que o próprio resultado do teste (manter só com acerto ≥ 95%, contra 96,4% medidos), porque desligar cedo custa menos do que descobrir tarde.
+**Com os números na mão, puxei para o lado conservador.** R$ 35/h em vez de R$ 50/h, sem recomendação da IA para nenhum dos dois: com o valor maior, a economia anunciada subiria 43% sem um minuto a mais de ganho real. Em acesso e RH, a IA só roteia; conceder continua com uma pessoa. No piloto, fiquei no critério do meio: a fila automática se desliga se o acerto cair abaixo de 95%, ou seja 1,4 ponto abaixo dos 96,4% que o teste mediu. Recusei o mais frouxo, que daria 3,4 pontos de folga, e não fui ao mais duro (97%) porque ele provavelmente deixaria o piloto restrito a duas ou três categorias e eu não teria o que medir.
 
-**A ordem de execução é minha, e ela contraria o pedido do brief.** O brief pede automação com IA; a primeira coisa da minha lista é um formulário que não usa IA, e logo atrás vem instrumentar o que hoje não se mede. A triagem, que é o pedido literal, é a terceira — porque 976 pedidos de compra idênticos são ganho garantido e sem risco, enquanto a triagem depende de um modelo treinado em dados que essa operação ainda não tem.
+**A ordem de execução é minha, e ela contraria o pedido do brief.** O brief pede automação com IA; a primeira coisa da minha lista é um formulário que não usa IA. A triagem, que é o pedido literal, vem depois — porque 976 pedidos de compra idênticos são ganho garantido e sem risco, enquanto a triagem depende de um modelo treinado em dados que essa operação ainda não tem. A alternativa de começar pela triagem estava na mesa, com o maior ganho isolado (34,7 h/mês), e eu não a escolhi.
+
+**O protótipo roda sobre um scaffold Next.js que eu já tinha.** A IA removeu o que não era usado e escreveu a lógica de triagem em cima dele; a base, as escolhas de stack e o ambiente de build são meus, e é por isso que o `pnpm build` fecha limpo em vez de virar uma tarde de configuração.
 
 **O que a IA decidiu está escrito que foi a IA.** O modelo, os cortes de confiança, o múltiplo do custo do erro e as hipóteses são dela, marcados como tal em `decisoes.md`. Em três das quatro perguntas do checkpoint 2, eu segui a recomendação dela. Prefiro entregar isso a uma lista de decisões que eu não saberia defender numa conversa.
 
