@@ -1,0 +1,114 @@
+[
+ {
+  "origem": "Dataset 2 (teste)",
+  "texto": "lost all appointments from outlook sent thursday july lost appointments hello morning something unexpected happened apparently lost appointments calendar can you help with issue thank you",
+  "tipo": null,
+  "categoria_real": "Administrative rights",
+  "sorteado_na_fila": "automatica"
+ },
+ {
+  "origem": "Dataset 2 (teste)",
+  "texto": "new starter access card enabling wednesday july pm starter form date hello please fill enclosed file starter form date thanks",
+  "tipo": null,
+  "categoria_real": "HR Support",
+  "sorteado_na_fila": "automatica"
+ },
+ {
+  "origem": "Dataset 2 (teste)",
+  "texto": "oracle and pas project setup friday pm re setup yep thank regards officer friday pm setup hello please provide details attached form thank analyst community builder ext hub friday setup has assigned hi please informed record number contains incomplete setup form unable both please reminded template mandatory thus please fill description please assist thank kind engineer",
+  "tipo": null,
+  "categoria_real": "Internal Project",
+  "sorteado_na_fila": "automatica"
+ },
+ {
+  "origem": "Dataset 2 (teste)",
+  "texto": "pass reset on re expire days hi work order change thank date october expire days dear expire days change pc press ctrl alt delete choose change thanks ext",
+  "tipo": null,
+  "categoria_real": "Access",
+  "sorteado_na_fila": "automatica"
+ },
+ {
+  "origem": "Dataset 2 (teste)",
+  "texto": "line manager split tuesday july pm re split hi please assist his help needed side let thanks tuesday july pm split ca care head create si va si consultant mob zone",
+  "tipo": null,
+  "categoria_real": "Miscellaneous",
+  "sorteado_na_fila": "assistida"
+ },
+ {
+  "origem": "Dataset 2 (teste)",
+  "texto": "mail tuesday hello accounts made friday receive bellow error colleagues entered found please recipient problem continues please please let takes available thank administration officer",
+  "tipo": null,
+  "categoria_real": "HR Support",
+  "sorteado_na_fila": "assistida"
+ },
+ {
+  "origem": "Dataset 2 (teste)",
+  "texto": "problem with which blocks delivery of project problem with blocks hey we currently experiencing issues with one job platform job release was noticed about issue last friday we tried solve issue by reaching for help our colleagues trough but without ticket since issue still open nobody was able find solution until would like open ticket with high importance get fixed possible worked migration for suggest ticket be assigned him thank you software developer please consider environment before printing content communication classified confidential proprietary information content communication intended solely for use individual or entity whom addressed others authorized receive if you intended recipient you hereby notified any disclosure copying or taking any action reliance contents information strictly prohibited be unlawful if you have received communication error please notify immediately by responding communication then delete your does guarantee integrity communication maintained nor communication free viruses interceptions or interference we appreciate your assistance preserving confidentiality our correspondence thank you",
+  "tipo": null,
+  "categoria_real": "Hardware",
+  "sorteado_na_fila": "assistida"
+ },
+ {
+  "origem": "Dataset 2 (teste)",
+  "texto": "pas and asp friday november pm re asp hi please modification error also modify code tm upgrade please officer friday november asp hi please create code asp upgrade form attached also modify code tm upgrade please also closed thanks lot senior programme november asp hello order correctly process please completed form looking forward hearing thanks kind regards analyst ext hub tuesday november pm asp hi looking asp both under means forecasting clear which relates code creating asp upgrade leave allow forecast viewed separately please advise information needed thanks",
+  "tipo": null,
+  "categoria_real": "Administrative rights",
+  "sorteado_na_fila": "assistida"
+ },
+ {
+  "origem": "Dataset 2 (teste)",
+  "texto": "assign to a laptop from the disposal or contingency march pm re action required approve requisition hello permanently assigned user consultant march re action required approve requisition hi mentioned justification borrowed work please give more details rejected thanks interim head march pm action required approve requisition hello please issue disposal contingency thank consultant march action required approve requisition amount requester justification raised he has issues he submits needs mobility he has regular daily meetings client demo clarification requirements details walk code these meetings usually held rooms because noise moreover regular visits client site expected next months taking option require constant multiple re setting tools needed waste productivity approve reject lines assets accessories task closure action history",
+  "tipo": null,
+  "categoria_real": "Hardware",
+  "sorteado_na_fila": "humana"
+ },
+ {
+  "origem": "Dataset 2 (teste)",
+  "texto": "include on am tuesday pm include dear please basing part please include him included best regards",
+  "tipo": null,
+  "categoria_real": "Miscellaneous",
+  "sorteado_na_fila": "humana"
+ },
+ {
+  "origem": "Dataset 2 (teste)",
+  "texto": "updates to be made tuesday november pm re updates made hi please thank analyst tuesday november pm updates made hello please note starting tomorrow changes were please update too employment type hourly thank administration officer",
+  "tipo": null,
+  "categoria_real": "HR Support",
+  "sorteado_na_fila": "humana"
+ },
+ {
+  "origem": "Dataset 2 (teste)",
+  "texto": "need triple for desk july triple hi please provide triple best regards senior tester",
+  "tipo": null,
+  "categoria_real": "HR Support",
+  "sorteado_na_fila": "humana"
+ },
+ {
+  "origem": "Dataset 1",
+  "texto": "I'm having an issue with the {product_purchased}. Please assist.\n\n4:13:51 PM\n\nThis place has many members with good jobs. The best one is \"the worker that brings food for someone hungry\". The issue I'm facing is intermittent. Sometimes it works fine, but other times it acts up unexpectedly.",
+  "tipo": "Product inquiry",
+  "categoria_real": null,
+  "sorteado_na_fila": null
+ },
+ {
+  "origem": "Dataset 1",
+  "texto": "The {product_purchased} is unable to establish a stable internet connection. It keeps disconnecting intermittently. How can I troubleshoot this network problem?\n\nTo set it off, simply restart your PC using the following command; I need assistance as soon as possible because it's affecting my work and productivity.",
+  "tipo": "Billing inquiry",
+  "categoria_real": null,
+  "sorteado_na_fila": null
+ },
+ {
+  "origem": "Dataset 1",
+  "texto": "I'm having an issue with the {product_purchased}. Please assist. Your name on a {Product_purchased} is a valid name and may change. Thank you.\n\nWe believe you'll find products here that are I've checked for any available software updates for my {product_purchased}, but there are none.",
+  "tipo": "Product inquiry",
+  "categoria_real": null,
+  "sorteado_na_fila": null
+ },
+ {
+  "origem": "Dataset 1",
+  "texto": "I'm having an issue with the {product_purchased}. Please assist.\n\n<!doctype html> <html xmlns> <head> <meta charset=\"utf-8\" charset=\"utf-8\"> I've followed the troubleshooting steps mentioned in the user manual, but the issue persists.",
+  "tipo": "Refund request",
+  "categoria_real": null,
+  "sorteado_na_fila": null
+ }
+]

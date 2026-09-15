@@ -26,3 +26,4 @@ solution/data/raw/
 
 # Artefatos intermediários regeneráveis pelos scripts
 solution/analysis/outputs/cache/
+solution/app/.vitest/

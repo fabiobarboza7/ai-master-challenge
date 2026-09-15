@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Cores validadas com o validador de paletas (filas: rampa ordinal de um tom; textos: contraste >= 4,5:1). */
+:root {
+  --paper: #f3f5f7;
+  --surface: #fcfcfb;
+  --ink: #14213d;
+  --ink-2: #4b5563;
+  --ink-3: #6b7280;
+  --rule: #dde3ea;
+  --axis: #c3c9d1;
+  --accent: #1c5cab;
+  --lane-humana: #86b6ef;
+  --lane-assistida: #2a78d6;
+  --lane-automatica: #104281;
+  --wrong: #d03b3b;
+}
+
+.dark {
+  --paper: #0d0d0d;
+  --surface: #1a1a19;
+  --ink: #f1f5f9;
+  --ink-2: #c3c2b7;
+  --ink-3: #9ca3af;
+  --rule: #2c2c2a;
+  --axis: #383835;
+  --accent: #86b6ef;
+  --lane-humana: #184f95;
+  --lane-assistida: #3987e5;
+  --lane-automatica: #9ec5f4;
+  --wrong: #d03b3b;
+}
+
+@theme inline {
+  --font-sans: var(--font-barlow), system-ui, sans-serif;
+  --font-heading: var(--font-barlow-semi), var(--font-barlow), system-ui, sans-serif;
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-rule: var(--rule);
+  --color-axis: var(--axis);
+  --color-accent: var(--accent);
+  --color-lane-humana: var(--lane-humana);
+  --color-lane-assistida: var(--lane-assistida);
+  --color-lane-automatica: var(--lane-automatica);
+  --color-wrong: var(--wrong);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
