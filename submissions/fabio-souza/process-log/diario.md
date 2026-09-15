@@ -1,7 +1,7 @@
 # Diário de bordo
 
 Registro cronológico, escrito durante o trabalho (não reconstruído no final).
-Horários em BRT (UTC−3). A sessão completa do Claude Code está em `chat-exports/`.
+Horários em BRT (UTC−3), lidos do log local do Claude Code.
 
 **Quem é quem neste log**
 - **Fabio** — candidato.
@@ -32,9 +32,9 @@ Pedido do Fabio: *"Va em frente! O importante e atingir o objetivo de eu ser apr
   - A primeira tentativa de filtro da IA (`git ls-files --exclude-from`) não listava nenhum arquivo. Foi detectado num teste com um `node_modules` falso antes de qualquer commit.
   - Solução final: um script de stage que percorre a pasta com uma lista de exclusão explícita e **bloqueia o commit** se houver dependências, dados brutos, `.env`, arquivo acima de 3 MB ou alteração fora da pasta.
 
-## 15/09 ~16:05 — Decisões iniciais do Fabio (antes de abrir os dados)
+## 15/09 16:01–16:06 — Checkpoint 1: decisões do Fabio antes de abrir os dados
 
-A IA fez 4 perguntas antes de qualquer análise. Respostas literais em [`decisoes.md`](decisoes.md).
+A IA fez 4 perguntas às 16:01 e parou até as respostas, que chegaram às 16:06. As perguntas e as respostas literais estão em [`decisoes.md`](decisoes.md).
 
 - Hipóteses sobre onde a operação perde tempo: *"Descubra!"*. O Fabio delegou a formulação à IA.
 - O que nunca automatizar: **reembolso/cancelamento**.
@@ -66,7 +66,7 @@ A revisão da própria saída pegou dois erros estatísticos (E3, E4).
 - **Aplicado ao Dataset 1:** o modelo manda 88% para Hardware, e 28,6% passariam na fila automática. Uma trava de vocabulário foi criada. Ela chegou a ser reportada barrando 95%; o número real, depois de alinhar a tokenização com o app, é 41% (E9).
 - **Curva de aprendizado:** 5 mil tickets rotulados dão ~40% de fila automática.
 
-## 15/09 16:42 — Checkpoint 2: decisões de negócio do Fabio
+## 15/09 16:36–16:41 — Checkpoint 2: decisões de negócio do Fabio
 
 Com os resultados em mãos, o Fabio escolheu:
 - 90% de precisão por ticket;
@@ -96,3 +96,18 @@ As três primeiras seguiram a recomendação da IA; o custo/hora foi escolha pr�
 
 - **`run_all.sh`:** uma leitura antes de rodar achou uma pasta inexistente em clone limpo (E14). Depois, num clone novo do branch, o script rodou tudo em 2 min 36 s, com saídas idênticas byte a byte, exceto o ECE do SVM na 9ª casa decimal.
 - **Documentação:** diagnóstico, proposta de automação com piloto, ficha do modelo e README no template.
+
+## 15/09 19:30–19:50 — Conferência final
+
+- Cada número dos documentos foi conferido contra o JSON que ele cita, relendo os arquivos por script. Dois não batiam (E15): o README dizia "treinado em 47.837 tickets" e "testado em 7.026 que nunca viu", sendo que os 7.026 **fazem parte** dos 47.837; e a tabela de candidatos dava ao modelo escolhido um F1 de 0,85, quando o valor é 0,844.
+- A tabela de candidatos também mostrava 7 dos 10 modelos comparados. Passou a mostrar os 10, com uma linha dizendo que o escolhido **não** é o melhor em acurácia nem em F1 — ele é o melhor no critério pré-registrado.
+- Os horários dos checkpoints foram acertados pelo log (16:01–16:06 e 16:36–16:41), no lugar das aproximações escritas durante o trabalho.
+
+## 15/09 19:54 — Checkpoint 3: decisões de operação
+
+A IA listou o que ainda estava decidido por ela e que, por ser decisão de negócio, cabia ao Fabio. Cada pergunta veio com o efeito numérico das alternativas. O Fabio decidiu três e devolveu uma.
+
+- **Critério do piloto:** manter ≥ 95% de acerto e ≤ 5% de correção humana (D13).
+- **Falsos positivos da regra por palavra-chave:** aceitos, para errar do lado seguro (D14).
+- **Ordem de execução:** formulário de compras antes da triagem (D15).
+- **Custo do erro (4× a triagem):** *"escolha o que faz mais sentido"* — delegado de volta à IA, que manteve 4× e registrou o porquê (D12).

@@ -7,9 +7,8 @@ Como a IA foi usada, quem decidiu o quê e onde ela errou. Tudo aqui foi escrito
 | [`diario.md`](diario.md) | Linha do tempo com horários, do pedido inicial à verificação final |
 | [`decisoes.md`](decisoes.md) | Cada decisão com **quem decidiu** (Fabio, IA por delegação, IA, Revisor-IA) e as respostas literais do Fabio nos dois checkpoints |
 | [`hipoteses-pre-registradas.md`](hipoteses-pre-registradas.md) | Hipóteses e regras de decisão escritas **antes** da análise, mais o adendo escrito antes de treinar |
-| [`erros-da-ia.md`](erros-da-ia.md) | 14 erros reais da IA: como foram detectados, a correção e o impacto se tivessem passado |
+| [`erros-da-ia.md`](erros-da-ia.md) | 15 erros reais da IA: como foram detectados, a correção e o impacto se tivessem passado |
 | [`screenshots/`](screenshots) | 9 capturas do protótipo rodando: regras de risco, teste com 7.026 tickets, economia, celular, modo escuro |
-| [`chat-exports/`](chat-exports) | {{CHAT_EXPORT_DESC}} |
 
 ## Como auditar
 

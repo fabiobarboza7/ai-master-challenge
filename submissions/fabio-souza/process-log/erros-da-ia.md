@@ -1,7 +1,7 @@
 # Onde a IA errou e como foi corrigido
 
 Só erros reais desta sessão, na ordem em que foram registrados, cada um com a evidência de como foi pego.
-A sessão completa do Claude Code está em `chat-exports/`.
+Os que geraram correção de código aparecem como commits de `fix:` no `git log`.
 
 | # | Etapa | Erro | Como foi detectado | Correção | Impacto se passasse |
 |---|-------|------|--------------------|----------|---------------------|
@@ -19,3 +19,4 @@ A sessão completa do Claude Code está em `chat-exports/`.
 | E12 | Protótipo | O gráfico dos 7.026 tickets cortava três colunas altas com rótulos sobrepostos. Ao remover o corte, a coluna de 98–100% (1.568 tickets) achatava as faixas baixas, justamente onde estão os erros. Os erros ficavam no topo de cada coluna e sumiam nas colunas cortadas | Revisão das capturas pela IA | Eixo até a segunda coluna mais alta, só a maior cortada, com um único rótulo; erros ancorados na base; rótulos dos cortes em duas linhas; textos curtos em telas estreitas | O gráfico principal esconderia a informação que ele existe para mostrar |
 | E13 | ROI | O cenário otimista usava R$ 50/h, mas **R$ 35/h foi decisão do Fabio** (D11), não uma incerteza para variar | Revisão da saída pela IA: R$ 8.248/mês no otimista não batia com 165 h × R$ 35 | Custo/hora fixo em todos os cenários; commit corrigido antes do push | O relatório contrariaria uma decisão explícita do candidato |
 | E14 | Reprodutibilidade | `run_all.sh` gravava logs em `outputs/cache/`, pasta ignorada pelo git e inexistente num clone limpo: o primeiro script falharia | Leitura do script pela IA antes de rodar a verificação | `mkdir -p outputs/cache`. Verificado depois em clone limpo: tudo passou em 2 min 36 s, com saídas idênticas (exceto o ECE do SVM na 9ª casa decimal) | "Não roda seguindo as instruções", critério explícito de avaliação |
+| E15 | Documentação | Dois números escritos à mão não batiam com os JSON que eles citam: o README dizia "treinado em 47.837 tickets" e "testado em 7.026 que nunca viu" (os 7.026 **fazem parte** dos 47.837; o treino são 32.889), e a tabela de candidatos dava F1 0,85 ao modelo escolhido, que tem 0,844 | Conferência final de cada número dos documentos contra `outputs/*.json`, com o JSON relido por script | README: "treinado em 32.889 tickets reais de TI". Ficha do modelo: F1 0,84, os 10 candidatos em vez de 7, e uma linha dizendo que o escolhido não é o melhor em acurácia nem em F1 | Contradição interna no primeiro parágrafo lido pelo avaliador, e a tabela de comparação favorecendo o modelo escolhido |

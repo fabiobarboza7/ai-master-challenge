@@ -18,15 +18,22 @@ Classificar o texto de tickets de TI em 8 categorias e decidir entre fila autom�
 
 "Cobertura automática" é a fração de tickets com acerto local ≥ 90%: o critério usado na escolha.
 
+Os dez candidatos, na ordem em que o script os avalia:
+
 | Modelo | Acurácia | F1 macro | Cobertura automática |
 |---|---|---|---|
 | Classe majoritária | 25,8% | 0,05 | 0% |
 | Vizinho mais próximo (cosseno) | 71,8% | 0,68 | 20,5% |
 | TF-IDF 5 mil termos + regressão logística (C = 2) | 86,0% | 0,85 | 62,7% |
-| **TF-IDF 20 mil termos + regressão logística (C = 2)** | **86,1%** | **0,85** | **64,6%** |
+| TF-IDF 5 mil termos + regressão logística (C = 8) | 85,1% | 0,84 | 61,2% |
+| **TF-IDF 20 mil termos + regressão logística (C = 2)** | **86,1%** | **0,84** | **64,6%** |
+| TF-IDF 20 mil termos + regressão logística (C = 8) | 85,8% | 0,85 | 59,1% |
 | TF-IDF 50 mil termos + regressão logística (C = 2) | 85,9% | 0,84 | 63,2% |
+| TF-IDF 50 mil termos + regressão logística (C = 8) | 86,2% | 0,85 | 61,7% |
 | TF-IDF 50 mil termos + SVM linear calibrado | 86,3% | 0,85 | 60,2% |
 | TF-IDF 50 mil termos + Naive Bayes complementar | 81,5% | 0,79 | 43,0% |
+
+O escolhido **não é o melhor em acurácia nem em F1** — é o melhor no critério pré-registrado. A diferença de acurácia para o primeiro colocado (SVM, 86,3%) é de 0,2 ponto; a de cobertura automática, 4,4 pontos a favor da regressão logística.
 
 Pela regra pré-registrada de precisão **média** da fila, o SVM "venceria" com 81% de cobertura. Mas no corte dessa regra os tickets acertavam só 52%, e por isso a regra foi trocada (erro E7).
 

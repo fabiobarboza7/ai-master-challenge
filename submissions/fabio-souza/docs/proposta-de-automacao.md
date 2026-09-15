@@ -28,6 +28,8 @@ As regras rodam nesta ordem; a primeira que decide encerra o fluxo.
 | 2 | **Triagem em três filas** (fluxo acima) | Teste com 7.026 tickets nunca vistos: 61% automáticos com 96% certos | 34,7 h/mês na base do brief; faixa de 5,3 a 169,6 | Médio, contido pelos cortes, pela trava e pela regra de risco |
 | 3 | **Resposta sugerida a partir do ticket gêmeo** | 12,3% dos tickets têm um quase idêntico (cosseno ≥ 0,9); 95% desses pares têm a mesma categoria | ~7,7 h/mês (premissa de 3 min poupados e 50% de adoção) | Baixo: o atendente decide |
 
+A ordem acima é **decisão do Fabio** (D15): primeiro o que não usa IA, depois a triagem. As alternativas consideradas foram começar pela triagem, que é o maior ganho isolado e o que o brief pede, ou não automatizar nada antes de 6 semanas de instrumentação.
+
 A de maior retorno por esforço não usa IA. Os ganhos são modestos na base do brief: a triagem sozinha devolve cerca de 0,22 pessoa em tempo integral. **O ganho grande só vai aparecer depois de medir onde o tempo vai** (`diagnostico.md`).
 
 ## O que não automatizar
@@ -41,9 +43,11 @@ A de maior retorno por esforço não usa IA. Os ganhos são modestos na base do 
 | **Fechar ticket como duplicado** | Pares quase idênticos às vezes são pedidos diferentes | 5% dos pares com cosseno ≥ 0,9 têm categorias diferentes |
 | **Resposta final ao cliente escrita por IA sem revisão** | Não há base para medir a qualidade dessas respostas | As resoluções do Dataset 1 são frases aleatórias; não existem respostas reais para comparar |
 
+**Como o reembolso é detectado, e o que isso custa** (*decisão do Fabio*, D14). A regra olha o campo de tipo **e** a palavra-chave no texto, porque um cliente que escolhe o tipo errado no formulário teria o pedido roteado pela IA. O preço disso é 0,7% dos tickets de TI indo para uma pessoa à toa — "cancel meeting" dispara a regra. Duas alternativas foram descartadas: usar só o campo de tipo (zera o falso positivo e abre o buraco) e aplicar a palavra-chave só quando o modelo está inseguro (deixa passar o pedido de reembolso que o modelo classifica com confiança alta).
+
 ## Piloto de 6 semanas
 
-Critérios propostos pela IA, para validação com a operação.
+Os critérios de continuar ou voltar são **decisão do Fabio** (D13), escolhidos entre três níveis de rigor; o resto do desenho é proposta da IA, para validar com a operação.
 
 **Semana 0: preparação**
 - Registrar os cinco eventos do diagnóstico.
