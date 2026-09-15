@@ -1,0 +1,406 @@
+{
+  "volume_e_tempo": {
+    "linhas": 8469,
+    "volume_anual_no_brief": 30000,
+    "fracao_do_brief": 0.2823,
+    "colunas_de_tempo": [
+      "Date of Purchase",
+      "First Response Time",
+      "Time to Resolution"
+    ],
+    "existe_carimbo_de_abertura": false,
+    "compra_min": "2020-01-01T00:00:00",
+    "compra_max": "2021-12-30T00:00:00",
+    "respostas_inicio": "2023-05-31T21:53:30",
+    "respostas_fim": "2023-06-02T00:55:33",
+    "janela_de_respostas_horas": 27.034166666666668
+  },
+  "preenchimento_por_status": {
+    "Closed": {
+      "First Response Time": 1.0,
+      "Time to Resolution": 1.0,
+      "Resolution": 1.0,
+      "Customer Satisfaction Rating": 1.0
+    },
+    "Open": {
+      "First Response Time": 0.0,
+      "Time to Resolution": 0.0,
+      "Resolution": 0.0,
+      "Customer Satisfaction Rating": 0.0
+    },
+    "Pending Customer Response": {
+      "First Response Time": 1.0,
+      "Time to Resolution": 0.0,
+      "Resolution": 0.0,
+      "Customer Satisfaction Rating": 0.0
+    }
+  },
+  "status": {
+    "Pending Customer Response": 2881,
+    "Open": 2819,
+    "Closed": 2769
+  },
+  "fracao_nao_fechados": 0.6730428622033298,
+  "consistencia_temporal": {
+    "fechados": 2769,
+    "fracao_resolucao_antes_da_1a_resposta": 0.49295774647887325,
+    "gap_horas": {
+      "min": -23.233333333333334,
+      "p25": -6.933333333333334,
+      "mediana": 0.16666666666666666,
+      "p75": 6.483333333333333,
+      "max": 23.466666666666665
+    }
+  },
+  "aderencia_a_distribuicao_uniforme": {
+    "Ticket Type": {
+      "categorias": 5,
+      "min": 1634,
+      "max": 1752,
+      "razao_max_min": 1.0722154222766218,
+      "p_aderencia_uniforme": 0.11489291565008315
+    },
+    "Ticket Subject": {
+      "categorias": 16,
+      "min": 478,
+      "max": 576,
+      "razao_max_min": 1.205020920502092,
+      "p_aderencia_uniforme": 0.022476836580291575
+    },
+    "Ticket Status": {
+      "categorias": 3,
+      "min": 2769,
+      "max": 2881,
+      "razao_max_min": 1.0404478150957024,
+      "p_aderencia_uniforme": 0.3278740452457159
+    },
+    "Ticket Priority": {
+      "categorias": 4,
+      "min": 2063,
+      "max": 2192,
+      "razao_max_min": 1.0625302956858944,
+      "p_aderencia_uniforme": 0.20478541975896916
+    },
+    "Ticket Channel": {
+      "categorias": 4,
+      "min": 2073,
+      "max": 2143,
+      "razao_max_min": 1.0337674867342017,
+      "p_aderencia_uniforme": 0.7179130597708259
+    },
+    "Customer Gender": {
+      "categorias": 3,
+      "min": 2686,
+      "max": 2896,
+      "razao_max_min": 1.0781831720029784,
+      "p_aderencia_uniforme": 0.006781046726791716
+    },
+    "Product Purchased": {
+      "categorias": 42,
+      "min": 178,
+      "max": 240,
+      "razao_max_min": 1.348314606741573,
+      "p_aderencia_uniforme": 0.4784100721256445
+    },
+    "Customer Satisfaction Rating (fechados)": {
+      "categorias": 5,
+      "min": 543,
+      "max": 580,
+      "razao_max_min": 1.0681399631675874,
+      "p_aderencia_uniforme": 0.7968287774654618,
+      "contagem_por_nota": {
+        "1": 553,
+        "2": 549,
+        "3": 580,
+        "4": 543,
+        "5": 544
+      }
+    },
+    "Customer Age": {
+      "categorias": 53,
+      "min": 137,
+      "max": 186,
+      "razao_max_min": 1.3576642335766422,
+      "p_aderencia_uniforme": 0.5496631657345159
+    }
+  },
+  "dominios_de_email": {
+    "example.com": 2904,
+    "example.org": 2796,
+    "example.net": 2769
+  },
+  "independencia_entre_campos": {
+    "Ticket Type x Ticket Subject": {
+      "v_cramer": 0.0,
+      "p": 0.9807366560438833,
+      "gl": 60,
+      "v_minimo_detectavel": 0.031018019314362558,
+      "p_holm": 1.0
+    },
+    "Ticket Type x Ticket Priority": {
+      "v_cramer": 0.0,
+      "p": 0.5612632410400242,
+      "gl": 12,
+      "v_minimo_detectavel": 0.026121434183972066,
+      "p_holm": 1.0
+    },
+    "Ticket Type x Ticket Channel": {
+      "v_cramer": 0.0,
+      "p": 0.45775523691611186,
+      "gl": 12,
+      "v_minimo_detectavel": 0.026121434183972066,
+      "p_holm": 1.0
+    },
+    "Ticket Priority x Ticket Channel": {
+      "v_cramer": 0.015975307372229144,
+      "p": 0.0784973114728638,
+      "gl": 9,
+      "v_minimo_detectavel": 0.024818622474603768,
+      "p_holm": 0.4709838688371828
+    },
+    "Product Purchased x Ticket Type": {
+      "v_cramer": 0.0,
+      "p": 0.9239807179031229,
+      "gl": 164,
+      "v_minimo_detectavel": 0.0385918937401221,
+      "p_holm": 1.0
+    },
+    "Product Purchased x Ticket Subject": {
+      "v_cramer": 0.010643501881481922,
+      "p": 0.334516527325443,
+      "gl": 615,
+      "v_minimo_detectavel": 0.027009406842765604,
+      "p_holm": 1.0
+    }
+  },
+  "coerencia_semantica": {
+    "assunto_refund_request_com_tipo_refund_request": 0.2065972222222222,
+    "esperado_se_aleatorio": 0.2,
+    "tipos_do_assunto_refund_request": {
+      "Cancellation request": 126,
+      "Product inquiry": 122,
+      "Refund request": 119,
+      "Technical issue": 109,
+      "Billing inquiry": 100
+    }
+  },
+  "texto_descricao": {
+    "fracao_com_placeholder_product_purchased": 1.0,
+    "primeiras_linhas_distintas": 3320,
+    "template_mais_comum": "I'm having an issue with the {product_purchased}. Please assist.",
+    "fracao_template_mais_comum": 0.3688747195654741
+  },
+  "sinal_do_texto": {
+    "descricao -> tipo": {
+      "acuracia": 0.1971897508560633,
+      "acaso_classe_majoritaria": 0.20687212185618137,
+      "p_binomial": 0.9869141000253961,
+      "classes": 5
+    },
+    "descricao -> assunto": {
+      "acuracia": 0.05809422600070847,
+      "acaso_classe_majoritaria": 0.06801275239107332,
+      "p_binomial": 0.999903849944863,
+      "classes": 16
+    },
+    "resolucao -> tipo (fechados)": {
+      "acuracia": 0.19790538100397256,
+      "acaso_classe_majoritaria": 0.21524015890213075,
+      "p_binomial": 0.9881229684840003,
+      "classes": 5
+    }
+  },
+  "satisfacao": {
+    "n_fechados_com_nota": 2769,
+    "media": 2.991332611050921,
+    "testes": {
+      "spearman CSAT x Customer Age": {
+        "rho": -0.004044920808271974,
+        "p": 0.8315190716565332,
+        "p_holm": 1.0
+      },
+      "spearman CSAT x gap_h": {
+        "rho": 0.021690975934877708,
+        "p": 0.2538591165828204,
+        "p_holm": 1.0
+      },
+      "spearman CSAT x momento da 1a resposta": {
+        "rho": -0.03786120819831231,
+        "p": 0.046357868496554266,
+        "p_holm": 0.4172208164689884
+      },
+      "kruskal CSAT por Ticket Channel": {
+        "H": 3.8471041113917335,
+        "p": 0.27845446914936406,
+        "grupos": 4,
+        "epsilon2": 0.00030636676723028335,
+        "media_por_grupo": {
+          "Chat": 3.083,
+          "Email": 2.964,
+          "Phone": 2.952,
+          "Social media": 2.969
+        },
+        "p_holm": 1.0
+      },
+      "kruskal CSAT por Ticket Priority": {
+        "H": 1.7371831685690908,
+        "p": 0.6286990111454205,
+        "grupos": 4,
+        "epsilon2": 0.0,
+        "media_por_grupo": {
+          "Critical": 2.959,
+          "High": 2.983,
+          "Low": 3.053,
+          "Medium": 2.977
+        },
+        "p_holm": 1.0
+      },
+      "kruskal CSAT por Ticket Type": {
+        "H": 2.198790774457706,
+        "p": 0.6992506657582733,
+        "grupos": 5,
+        "epsilon2": 0.0,
+        "media_por_grupo": {
+          "Billing inquiry": 3.028,
+          "Cancellation request": 3.029,
+          "Product inquiry": 3.017,
+          "Refund request": 2.935,
+          "Technical issue": 2.959
+        },
+        "p_holm": 1.0
+      },
+      "kruskal CSAT por Ticket Subject": {
+        "H": 10.205319179847276,
+        "p": 0.8066298085314396,
+        "grupos": 16,
+        "epsilon2": 0.0,
+        "media_por_grupo": {
+          "Account access": 2.942,
+          "Battery life": 2.954,
+          "Cancellation request": 3.068,
+          "Data loss": 2.966,
+          "Delivery problem": 2.803,
+          "Display issue": 3.077,
+          "Hardware issue": 3.0,
+          "Installation support": 3.184,
+          "Network problem": 2.881,
+          "Payment issue": 3.058,
+          "Peripheral compatibility": 2.962,
+          "Product compatibility": 2.959,
+          "Product recommendation": 2.968,
+          "Product setup": 2.984,
+          "Refund request": 3.067,
+          "Software bug": 3.045
+        },
+        "p_holm": 1.0
+      },
+      "kruskal CSAT por Customer Gender": {
+        "H": 0.9384998835139909,
+        "p": 0.6254712322390772,
+        "grupos": 3,
+        "epsilon2": 0.0,
+        "media_por_grupo": {
+          "Female": 2.972,
+          "Male": 3.028,
+          "Other": 2.975
+        },
+        "p_holm": 1.0
+      },
+      "kruskal CSAT por Product Purchased": {
+        "H": 36.57699256979943,
+        "p": 0.6674244655679761,
+        "grupos": 42,
+        "epsilon2": 0.0,
+        "media_por_grupo": null,
+        "p_holm": 1.0
+      }
+    },
+    "algum_significativo_apos_holm": false,
+    "poder_80pct": {
+      "rho_minimo_detectavel": 0.05321906404514804,
+      "f_minimo_detectavel_4_grupos": 0.06279277984901187,
+      "referencia_cohen": "efeito pequeno: rho = 0,10; f = 0,10"
+    }
+  },
+  "fluxo": {
+    "fracao_nao_fechados": 0.6730428622033298,
+    "fracao_sem_1a_resposta": 0.3328610225528398,
+    "testes": {
+      "nao_fechado x Ticket Channel": {
+        "v_cramer": 0.0,
+        "p": 0.7783407894131796,
+        "fracao_por_grupo": {
+          "Chat": 0.6749,
+          "Email": 0.664,
+          "Phone": 0.6759,
+          "Social media": 0.6775
+        },
+        "v_minimo_detectavel": 0.03587965362480291,
+        "p_holm": 1.0
+      },
+      "nao_fechado x Ticket Priority": {
+        "v_cramer": 0.019469036227077886,
+        "p": 0.10182429708987562,
+        "fracao_por_grupo": {
+          "Critical": 0.659,
+          "High": 0.6619,
+          "Low": 0.6878,
+          "Medium": 0.6834
+        },
+        "v_minimo_detectavel": 0.03587965362480291,
+        "p_holm": 0.6109457825392537
+      },
+      "nao_fechado x Ticket Type": {
+        "v_cramer": 0.01459422188948988,
+        "p": 0.21426503711928832,
+        "fracao_por_grupo": {
+          "Billing inquiry": 0.6671,
+          "Cancellation request": 0.6956,
+          "Product inquiry": 0.6752,
+          "Refund request": 0.6598,
+          "Technical issue": 0.668
+        },
+        "v_minimo_detectavel": 0.037540525334031,
+        "p_holm": 1.0
+      },
+      "sem_1a_resposta x Ticket Channel": {
+        "v_cramer": 0.0,
+        "p": 0.5700973632288735,
+        "fracao_por_grupo": {
+          "Chat": 0.3304,
+          "Email": 0.3271,
+          "Phone": 0.3452,
+          "Social media": 0.3286
+        },
+        "v_minimo_detectavel": 0.03587965362480291,
+        "p_holm": 1.0
+      },
+      "sem_1a_resposta x Ticket Priority": {
+        "v_cramer": 0.0,
+        "p": 0.7998460320707618,
+        "fracao_por_grupo": {
+          "Critical": 0.325,
+          "High": 0.3376,
+          "Low": 0.3374,
+          "Medium": 0.3317
+        },
+        "v_minimo_detectavel": 0.03587965362480291,
+        "p_holm": 1.0
+      },
+      "sem_1a_resposta x Ticket Type": {
+        "v_cramer": 0.0,
+        "p": 0.47934822285484613,
+        "fracao_por_grupo": {
+          "Billing inquiry": 0.3299,
+          "Cancellation request": 0.3434,
+          "Product inquiry": 0.3242,
+          "Refund request": 0.3219,
+          "Technical issue": 0.3446
+        },
+        "v_minimo_detectavel": 0.037540525334031,
+        "p_holm": 1.0
+      }
+    },
+    "algum_significativo_apos_holm": false
+  }
+}
