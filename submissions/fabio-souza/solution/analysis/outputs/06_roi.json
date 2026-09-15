@@ -1,0 +1,287 @@
+{
+  "formula": "horas/mês = tickets/mês × (1 − fração reembolso/cancelamento) × [fila_auto × (precisão × t − (1 − precisão) × k × t) + fila_assistida × (top2 × (t − c) − (1 − top2) × c)] / 60; t = min de triagem manual, k = múltiplo do custo de erro, c = min de confirmação",
+  "parametros": {
+    "tickets_por_mes": {
+      "valor": 2500.0,
+      "faixa": [
+        1500.0,
+        4000.0
+      ],
+      "origem": "BRIEF",
+      "nota": "~30 mil/ano no brief. O Dataset 1 tem 8.469 linhas numa janela de 27 h e não serve para medir volume."
+    },
+    "fracao_reembolso_cancelamento": {
+      "valor": 0.407,
+      "faixa": [
+        0.2,
+        0.5
+      ],
+      "origem": "DATASET 1 (sintético)",
+      "nota": "Vai sempre para humano (decisão D3 do Fabio). No Dataset 1 os 5 tipos têm ~20% cada; o valor real precisa ser medido."
+    },
+    "fila_auto": {
+      "valor": 0.609735269000854,
+      "origem": "MEDIDO",
+      "nota": "Teste do Dataset 2 com corte por ticket de 90% e trava de domínio."
+    },
+    "precisao_auto": {
+      "valor": 0.9645191409897292,
+      "origem": "MEDIDO",
+      "nota": "Fração da fila automática roteada para a categoria certa."
+    },
+    "fila_assistida": {
+      "valor": 0.2604611443210931,
+      "origem": "MEDIDO",
+      "nota": "Atendente confirma 1 de 2 sugestões."
+    },
+    "top2_assistida": {
+      "valor": 0.9393442622950819,
+      "origem": "MEDIDO",
+      "nota": "Fração da fila assistida em que a categoria certa está nas 2 sugestões."
+    },
+    "min_triagem_manual": {
+      "valor": 2.0,
+      "faixa": [
+        1.0,
+        4.0
+      ],
+      "origem": "PREMISSA",
+      "nota": "Ler o ticket, decidir a fila e encaminhar. Medir cronometrando 50 tickets."
+    },
+    "multiplo_custo_erro": {
+      "valor": 4.0,
+      "faixa": [
+        2.0,
+        8.0
+      ],
+      "origem": "PREMISSA (D5)",
+      "nota": "Um ticket na fila errada custa N vezes a triagem: o agente errado lê, devolve, e o cliente espera."
+    },
+    "min_confirmacao_assistida": {
+      "valor": 0.5,
+      "faixa": [
+        0.25,
+        1.0
+      ],
+      "origem": "PREMISSA",
+      "nota": "Conferir 2 sugestões e clicar."
+    },
+    "custo_hora_brl": {
+      "valor": 35.0,
+      "origem": "FABIO (D11)",
+      "nota": "Salário + encargos de atendente júnior. Decisão do candidato: fixa em todos os cenários."
+    },
+    "horas_produtivas_por_fte_mes": {
+      "valor": 160.0,
+      "origem": "PREMISSA",
+      "nota": "Horas produtivas de uma pessoa em tempo integral."
+    }
+  },
+  "base": {
+    "tickets_elegiveis_mes": 1482.5,
+    "tickets_auto_mes": 903.932536293766,
+    "tickets_assistidos_mes": 386.1336464560205,
+    "min_liquidos_por_ticket_auto": 1.6451914098972924,
+    "min_liquidos_por_ticket_assistido": 1.3786885245901639,
+    "horas_mes": 33.65833451940412,
+    "horas_mes_fila_auto": 24.785700730619606,
+    "horas_mes_fila_assistida": 8.872633788784515,
+    "fte": 0.21036459074627575,
+    "brl_mes": 1178.0417081791443,
+    "brl_ano": 14136.500498149731
+  },
+  "sensibilidade": [
+    {
+      "parametro": "min_triagem_manual",
+      "origem": "PREMISSA",
+      "faixa": [
+        1.0,
+        4.0
+      ],
+      "horas_mes_no_minimo": 15.220277066135308,
+      "horas_mes_no_maximo": 70.53444942594174,
+      "amplitude": 55.314172359806435
+    },
+    {
+      "parametro": "tickets_por_mes",
+      "origem": "BRIEF",
+      "faixa": [
+        1500.0,
+        4000.0
+      ],
+      "horas_mes_no_minimo": 20.19500071164247,
+      "horas_mes_no_maximo": 53.85333523104659,
+      "amplitude": 33.65833451940412
+    },
+    {
+      "parametro": "fracao_reembolso_cancelamento",
+      "origem": "DATASET 1 (sintético)",
+      "faixa": [
+        0.2,
+        0.5
+      ],
+      "horas_mes_no_minimo": 45.40753392162444,
+      "horas_mes_no_maximo": 28.379708701015275,
+      "amplitude": 17.027825220609166
+    },
+    {
+      "parametro": "multiplo_custo_erro",
+      "origem": "PREMISSA (D5)",
+      "faixa": [
+        2.0,
+        8.0
+      ],
+      "horas_mes_no_minimo": 35.79648804440649,
+      "horas_mes_no_maximo": 29.38202746939938,
+      "amplitude": 6.414460575007109
+    },
+    {
+      "parametro": "min_confirmacao_assistida",
+      "origem": "PREMISSA",
+      "faixa": [
+        0.25,
+        1.0
+      ],
+      "horas_mes_no_minimo": 35.26722471297087,
+      "horas_mes_no_maximo": 30.440554132270616,
+      "amplitude": 4.826670580700256
+    }
+  ],
+  "cenarios": {
+    "pessimista": {
+      "parametros": {
+        "tickets_por_mes": 1500.0,
+        "fracao_reembolso_cancelamento": 0.5,
+        "fila_auto": 0.609735269000854,
+        "precisao_auto": 0.9645191409897292,
+        "fila_assistida": 0.2604611443210931,
+        "top2_assistida": 0.9393442622950819,
+        "min_triagem_manual": 1.0,
+        "multiplo_custo_erro": 8.0,
+        "min_confirmacao_assistida": 1.0,
+        "custo_hora_brl": 35.0,
+        "horas_produtivas_por_fte_mes": 160.0
+      },
+      "tickets_elegiveis_mes": 750.0,
+      "tickets_auto_mes": 457.30145175064047,
+      "tickets_assistidos_mes": 195.3458582408198,
+      "min_liquidos_por_ticket_auto": 0.6806722689075632,
+      "min_liquidos_por_ticket_assistido": -0.060655737704918056,
+      "horas_mes": 4.990392826643895,
+      "horas_mes_fila_auto": 5.1878736122971825,
+      "horas_mes_fila_assistida": -0.19748078565328786,
+      "fte": 0.03118995516652434,
+      "brl_mes": 174.66374893253632,
+      "brl_ano": 2095.9649871904357
+    },
+    "otimista": {
+      "parametros": {
+        "tickets_por_mes": 4000.0,
+        "fracao_reembolso_cancelamento": 0.2,
+        "fila_auto": 0.609735269000854,
+        "precisao_auto": 0.9645191409897292,
+        "fila_assistida": 0.2604611443210931,
+        "top2_assistida": 0.9393442622950819,
+        "min_triagem_manual": 4.0,
+        "multiplo_custo_erro": 2.0,
+        "min_confirmacao_assistida": 0.25,
+        "custo_hora_brl": 35.0,
+        "horas_produtivas_por_fte_mes": 160.0
+      },
+      "tickets_elegiveis_mes": 3200.0,
+      "tickets_auto_mes": 1951.1528608027327,
+      "tickets_assistidos_mes": 833.4756618274978,
+      "min_liquidos_por_ticket_auto": 3.574229691876751,
+      "min_liquidos_por_ticket_assistido": 3.5073770491803278,
+      "horas_mes": 164.95303159692568,
+      "horas_mes_fila_auto": 116.2311414745232,
+      "horas_mes_fila_assistida": 48.721890122402506,
+      "fte": 1.0309564474807855,
+      "brl_mes": 5773.356105892399,
+      "brl_ano": 69280.27327070879
+    }
+  },
+  "rotulagem": {
+    "min_por_rotulo_premissa": 0.5,
+    "por_volume": [
+      {
+        "tickets_rotulados": 500,
+        "fila_auto": 0.15082076098301547,
+        "horas_mes_so_fila_auto": 5.3325829312172885,
+        "brl_mes_so_fila_auto": 186.64040259260508,
+        "custo_rotulagem_brl": 145.83333333333334,
+        "meses_para_pagar_rotulagem": 0.7813599376532391
+      },
+      {
+        "tickets_rotulados": 1000,
+        "fila_auto": 0.25016604990985863,
+        "horas_mes_so_fila_auto": 9.424749124776632,
+        "brl_mes_so_fila_auto": 329.8662193671821,
+        "custo_rotulagem_brl": 291.6666666666667,
+        "meses_para_pagar_rotulagem": 0.8841968335715075
+      },
+      {
+        "tickets_rotulados": 2000,
+        "fila_auto": 0.338599487617421,
+        "horas_mes_so_fila_auto": 13.227372784193902,
+        "brl_mes_so_fila_auto": 462.95804744678657,
+        "custo_rotulagem_brl": 583.3333333333334,
+        "meses_para_pagar_rotulagem": 1.2600133782108691
+      },
+      {
+        "tickets_rotulados": 5000,
+        "fila_auto": 0.3976658126957016,
+        "horas_mes_so_fila_auto": 16.956918206269826,
+        "brl_mes_so_fila_auto": 593.4921372194439,
+        "custo_rotulagem_brl": 1458.3333333333333,
+        "meses_para_pagar_rotulagem": 2.457207504324719
+      },
+      {
+        "tickets_rotulados": 10000,
+        "fila_auto": 0.4684505171268622,
+        "horas_mes_so_fila_auto": 20.008692941645144,
+        "brl_mes_so_fila_auto": 700.30425295758,
+        "custo_rotulagem_brl": 2916.6666666666665,
+        "meses_para_pagar_rotulagem": 4.164856423973966
+      },
+      {
+        "tickets_rotulados": 20000,
+        "fila_auto": 0.5732991744947339,
+        "horas_mes_so_fila_auto": 23.446873234634023,
+        "brl_mes_so_fila_auto": 820.6405632121908,
+        "custo_rotulagem_brl": 5833.333333333333,
+        "meses_para_pagar_rotulagem": 7.108268339186426
+      },
+      {
+        "tickets_rotulados": 32889,
+        "fila_auto": 0.614289780814119,
+        "horas_mes_so_fila_auto": 24.870101527659173,
+        "brl_mes_so_fila_auto": 870.453553468071,
+        "custo_rotulagem_brl": 9592.625,
+        "meses_para_pagar_rotulagem": 11.020260600673009
+      }
+    ]
+  },
+  "alavancas_adicionais": {
+    "formulario_para_pedido_de_compra": {
+      "volume_medido": 0.020402617220979576,
+      "origem_volume": "MEDIDO (Dataset 2: 976 tickets com o mesmo template)",
+      "premissas": {
+        "min_por_ticket": 8.0,
+        "fracao_eliminada_pelo_formulario": 0.8
+      },
+      "horas_mes": 5.440697925594554,
+      "nota": "Automação na origem (formulário + integração), sem IA: o texto é sempre o mesmo pedido de alocação."
+    },
+    "resposta_sugerida_por_ticket_gemeo": {
+      "volume_medido": 0.12314735455818718,
+      "origem_volume": "MEDIDO (Dataset 2: 12,3% com quase-duplicado, cosseno >= 0,9)",
+      "premissas": {
+        "min_poupados_por_ticket": 3.0,
+        "adocao_pelos_atendentes": 0.5
+      },
+      "horas_mes": 7.696709659886698,
+      "nota": "Mostrar a resposta do ticket gêmeo ao atendente; nunca fechar como duplicado sem humano."
+    }
+  }
+}
