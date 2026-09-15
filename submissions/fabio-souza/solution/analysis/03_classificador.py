@@ -28,6 +28,7 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.svm import LinearSVC
 
 from common import OUT, SEED, load_ds2, save_json
+from texto import normalize
 from politica import GRID, MIN_LANE, ece, local_accuracy, tau_marginal, tau_media, top2_hit, wilson
 
 TARGET = 0.90
@@ -38,7 +39,7 @@ CLASS_MIN_SUPPORT = 20
 t0 = time.time()
 df = load_ds2()
 groups = np.load(OUT / "cache" / "ds2_grupos.npy")
-texts = df["Document"].to_numpy()
+texts = df["Document"].map(normalize).to_numpy()  # o mesmo texto normalizado que o protótipo usa
 classes = np.array(sorted(df["Topic_group"].unique()))
 y = np.searchsorted(classes, df["Topic_group"].to_numpy())
 n, K = len(y), len(classes)

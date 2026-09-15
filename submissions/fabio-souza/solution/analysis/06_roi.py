@@ -15,6 +15,7 @@ import numpy as np
 
 from common import OUT, load_ds2, save_json
 from politica import top2_hit
+from texto import known_share, normalize
 
 state = pickle.load(open(OUT / "cache" / "modelo_escolhido.pkl", "rb"))
 vec, clf, classes, pol = state["vec"], state["clf"], state["classes"], state["policy"]
@@ -24,12 +25,12 @@ audit2 = json.loads((OUT / "02_auditoria_ds2.json").read_text())
 
 # ------------------------------------------------------------------ filas medidas no teste, já com a trava de domínio
 ds2 = load_ds2()
-test_texts = ds2["Document"][state["is_test"]]
+test_texts = ds2["Document"][state["is_test"]].map(normalize)
 y_test = np.searchsorted(classes, ds2["Topic_group"][state["is_test"]].to_numpy())
 proba = clf.predict_proba(vec.transform(test_texts))
 conf, pred = proba.max(1), proba.argmax(1)
 vocab = vec.vocabulary_
-known = np.array([np.mean([t in vocab for t in d.split()]) if d.split() else 0.0 for d in test_texts])
+known = np.array([known_share(d, vocab) for d in test_texts])
 in_domain = known >= transfer["trava_de_dominio"]["corte_fracao_de_palavras_conhecidas"]
 auto = (conf >= pol["tau_auto"]) & pol["elegiveis"][pred] & in_domain
 assist = ~auto & (conf >= pol["tau_assist"]) & in_domain

@@ -13,6 +13,8 @@ import numpy as np
 import pandas as pd
 
 from common import OUT, load_ds1, load_ds2, save_json
+from texto import known_share as known_share_one
+from texto import normalize
 
 RISK_TYPES = {"Refund request", "Cancellation request"}
 RISK_PATTERN = re.compile(r"refund|reembols|estorn|chargeback|cancel", re.IGNORECASE)
@@ -20,12 +22,6 @@ RISK_PATTERN = re.compile(r"refund|reembols|estorn|chargeback|cancel", re.IGNORE
 state = pickle.load(open(OUT / "cache" / "modelo_escolhido.pkl", "rb"))
 vec, clf, classes, policy = state["vec"], state["clf"], state["classes"], state["policy"]
 vocab = vec.vocabulary_
-
-
-def normalize(text: str) -> str:
-    """Aproxima o pré-processamento do Dataset 2: minúsculas, sem placeholders, dígitos e pontuação."""
-    text = text.replace("{product_purchased}", " ").lower()
-    return re.sub(r"\s+", " ", re.sub(r"[^a-z]+", " ", text)).strip()
 
 
 def lanes(proba: np.ndarray) -> dict:
@@ -37,7 +33,7 @@ def lanes(proba: np.ndarray) -> dict:
 
 def describe(texts: pd.Series, proba: np.ndarray) -> dict:
     X = vec.transform(texts)
-    unigram_hits = [np.mean([t in vocab for t in doc.split()]) if doc.split() else 0.0 for doc in texts]
+    unigram_hits = [known_share_one(doc, vocab) for doc in texts]
     L = lanes(proba)
     return {
         "tickets": len(texts),
@@ -51,7 +47,7 @@ def describe(texts: pd.Series, proba: np.ndarray) -> dict:
 
 
 ds2 = load_ds2()
-test_texts = ds2["Document"][state["is_test"]]
+test_texts = ds2["Document"][state["is_test"]].map(normalize)
 ds2_desc = describe(test_texts, clf.predict_proba(vec.transform(test_texts)))
 
 ds1 = load_ds1()
@@ -66,10 +62,10 @@ auto_after_rule = L1["auto"] & ~risk_by_type
 
 # ------------------------------------------------------------------ trava de domínio (vocabulário conhecido)
 def known_share(texts: pd.Series) -> np.ndarray:
-    return np.array([np.mean([t in vocab for t in doc.split()]) if doc.split() else 0.0 for doc in texts])
+    return np.array([known_share_one(normalize(doc), vocab) for doc in texts])
 
 
-known_val = known_share(ds2["Document"][state["is_val"]])
+known_val = known_share(ds2["Document"][state["is_val"]])  # known_share normaliza internamente
 known_test = known_share(test_texts)
 known_ds1 = known_share(ds1_texts)
 # Corte escolhido na validação do Dataset 2: aceita perder no máximo 1% dos tickets do próprio domínio.
@@ -88,6 +84,30 @@ ood_guard = {
         "dataset1": {q: float(np.quantile(known_ds1, v)) for q, v in [("p50", .5), ("p90", .9), ("p99", .99)]},
     },
 }
+
+# ------------------------------------------------------------------ travas alternativas (mesmo critério de corte)
+from sklearn.neighbors import NearestNeighbors  # noqa: E402
+from sklearn.preprocessing import normalize as l2_normalize  # noqa: E402
+
+train_mask = ~state["is_val"] & ~state["is_test"]
+y2 = np.searchsorted(classes, ds2["Topic_group"].to_numpy())
+X_train = vec.transform(ds2["Document"][train_mask].map(normalize))
+X_val = vec.transform(ds2["Document"][state["is_val"]].map(normalize))
+X_test, X_ds1 = vec.transform(test_texts), vec.transform(ds1_texts)
+centroids = l2_normalize(np.vstack([np.asarray(X_train[y2[train_mask] == k].mean(0)) for k in range(len(classes))]))
+nn = NearestNeighbors(n_neighbors=1, metric="cosine", algorithm="brute", n_jobs=-1).fit(X_train)
+signals = {
+    "fracao_de_palavras_conhecidas": (known_val, known_test, known_ds1),
+    "similaridade_com_centroide_da_categoria": tuple(np.asarray(X @ centroids.T).max(1) for X in (X_val, X_test, X_ds1)),
+    "similaridade_com_ticket_mais_proximo_do_treino": tuple(1 - nn.kneighbors(X)[0][:, 0] for X in (X_val, X_test, X_ds1)),
+}
+alternatives = {}
+for name, (s_val, s_test, s_ds1) in signals.items():
+    cut = float(np.quantile(s_val, 0.01))
+    alternatives[name] = {"corte": cut, "dataset2_teste_barrados": float((s_test < cut).mean()),
+                          "dataset1_barrados": float((s_ds1 < cut).mean()),
+                          "dataset1_fila_auto_com_trava": float((L1["auto"] & (s_ds1 >= cut)).mean())}
+ood_guard["comparacao_de_travas"] = alternatives
 
 res = {
     "trava_de_dominio": ood_guard,
@@ -115,4 +135,7 @@ for name in ("dataset2_teste", "dataset1_descricoes"):
     print("   previsto:", d["categoria_prevista"])
 print(f"Queda de cobertura AUTO: {res['queda_de_cobertura_auto_pp']:.1f} p.p.")
 print("Regra D3:", res["regra_de_risco_D3"])
-print("Trava de domínio:", ood_guard)
+print("Trava de domínio:", {k: v for k, v in ood_guard.items() if k != "comparacao_de_travas"})
+for k, v in alternatives.items():
+    print(f"  {k}: barra {v['dataset1_barrados']:.1%} do Dataset 1, deixa {v['dataset1_fila_auto_com_trava']:.1%} na fila auto "
+          f"(custa {v['dataset2_teste_barrados']:.1%} do Dataset 2)")

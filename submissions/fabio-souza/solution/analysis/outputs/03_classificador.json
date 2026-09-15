@@ -88,7 +88,7 @@
     "tfidf50k_svm_linear_calibrado": {
       "acuracia": 0.8634183287048726,
       "f1_macro": 0.8505946374173906,
-      "ece": 0.08357621841513557,
+      "ece": 0.0835762421561981,
       "cobertura_auto_regra_media": 0.8109063367836405,
       "acerto_local_no_corte_regra_media": 0.5161290322580645,
       "cobertura_auto_regra_marginal": 0.6019944458470083,

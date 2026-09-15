@@ -16,13 +16,14 @@ from sklearn.linear_model import LogisticRegression
 
 from common import OUT, SEED, load_ds2, save_json
 from politica import tau_marginal
+from texto import normalize
 
 state = pickle.load(open(OUT / "cache" / "modelo_escolhido.pkl", "rb"))
 vec0, clf0, classes = state["vec"], state["clf"], state["classes"]
 is_val, is_test = state["is_val"], state["is_test"]
 
 df = load_ds2()
-texts = df["Document"].to_numpy()
+texts = df["Document"].map(normalize).to_numpy()
 y = np.searchsorted(classes, df["Topic_group"].to_numpy())
 train_idx = np.nonzero(~is_val & ~is_test)[0]
 rng = np.random.default_rng(SEED)

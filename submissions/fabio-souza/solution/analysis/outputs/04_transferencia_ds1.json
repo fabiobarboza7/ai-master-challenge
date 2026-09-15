@@ -2,21 +2,41 @@
   "trava_de_dominio": {
     "corte_fracao_de_palavras_conhecidas": 0.85,
     "criterio": "percentil 1 da validação do Dataset 2 (perde no máximo ~1% do domínio de treino)",
-    "dataset2_teste_barrados": 0.010105323085681753,
+    "dataset2_teste_barrados": 0.009962994591517222,
     "dataset2_teste_fila_auto_com_trava": 0.609735269000854,
-    "dataset1_barrados": 0.9526508442555202,
-    "dataset1_fila_auto_com_trava": 0.009446215609871295,
-    "dataset1_fila_auto_com_trava_e_regra_D3": 0.005667729365922777,
+    "dataset1_barrados": 0.4077222812610698,
+    "dataset1_fila_auto_com_trava": 0.17640807651434645,
+    "dataset1_fila_auto_com_trava_e_regra_D3": 0.10402644940370764,
     "quantis_conhecidas": {
       "dataset2_validacao": {
         "p1": 0.85,
-        "p5": 0.9285714285714286,
+        "p5": 0.93,
         "p50": 1.0
       },
       "dataset1": {
-        "p50": 0.7647058823529411,
-        "p90": 0.8333333333333334,
-        "p99": 0.875
+        "p50": 0.8627450980392157,
+        "p90": 0.926829268292683,
+        "p99": 0.9615384615384616
+      }
+    },
+    "comparacao_de_travas": {
+      "fracao_de_palavras_conhecidas": {
+        "corte": 0.85,
+        "dataset2_teste_barrados": 0.009962994591517222,
+        "dataset1_barrados": 0.4077222812610698,
+        "dataset1_fila_auto_com_trava": 0.17640807651434645
+      },
+      "similaridade_com_centroide_da_categoria": {
+        "corte": 0.053784164751152656,
+        "dataset2_teste_barrados": 0.006974096214062055,
+        "dataset1_barrados": 0.0,
+        "dataset1_fila_auto_com_trava": 0.286456488369347
+      },
+      "similaridade_com_ticket_mais_proximo_do_treino": {
+        "corte": 0.19544447539463922,
+        "dataset2_teste_barrados": 0.00825505266154284,
+        "dataset1_barrados": 0.18597236981934112,
+        "dataset1_fila_auto_com_trava": 0.22092336757586492
       }
     }
   },
@@ -46,7 +66,7 @@
   "dataset1_descricoes": {
     "tickets": 8469,
     "termos_ativos_por_ticket_mediana": 38.0,
-    "fracao_de_palavras_no_vocabulario_mediana": 0.7647058823529411,
+    "fracao_de_palavras_no_vocabulario_mediana": 0.8627450980392157,
     "confianca_quantis": {
       "p10": 0.4369223694928967,
       "p50": 0.6705059167027587,
