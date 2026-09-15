@@ -23,3 +23,6 @@ solution/data/raw/
 # SO / editores / logs
 .DS_Store
 *.log
+
+# Artefatos intermediários regeneráveis pelos scripts
+solution/analysis/outputs/cache/

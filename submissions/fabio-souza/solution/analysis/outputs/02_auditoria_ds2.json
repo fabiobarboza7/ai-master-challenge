@@ -1,0 +1,60 @@
+{
+  "linhas": 47837,
+  "classes": {
+    "Hardware": 13617,
+    "HR Support": 10915,
+    "Access": 7125,
+    "Miscellaneous": 7060,
+    "Storage": 2777,
+    "Purchase": 2464,
+    "Internal Project": 2119,
+    "Administrative rights": 1760
+  },
+  "fracao_por_classe": {
+    "Hardware": 0.2847,
+    "HR Support": 0.2282,
+    "Access": 0.1489,
+    "Miscellaneous": 0.1476,
+    "Storage": 0.0581,
+    "Purchase": 0.0515,
+    "Internal Project": 0.0443,
+    "Administrative rights": 0.0368
+  },
+  "tokens_por_ticket": {
+    "min": 2.0,
+    "p25": 17.0,
+    "mediana": 26.0,
+    "p75": 46.0,
+    "p95": 136.0,
+    "max": 981.0
+  },
+  "duplicatas_exatas": 0,
+  "texto_pre_processado": {
+    "com_maiusculas": 0.0,
+    "com_digitos": 0.0
+  },
+  "quase_duplicados": {
+    "0.95": {
+      "fracao_com_quase_duplicado": 0.0703848485481949,
+      "tickets": 3367,
+      "rotulo_igual_ao_do_vizinho": 0.9604989604989606
+    },
+    "0.9": {
+      "fracao_com_quase_duplicado": 0.12314735455818718,
+      "tickets": 5891,
+      "rotulo_igual_ao_do_vizinho": 0.9500933627567476
+    },
+    "0.8": {
+      "fracao_com_quase_duplicado": 0.22072872462738047,
+      "tickets": 10559,
+      "rotulo_igual_ao_do_vizinho": 0.9205417179657165
+    }
+  },
+  "rotulo_igual_ao_vizinho_geral": 0.7286410100967871,
+  "grupos_para_divisao": {
+    "limiar": 0.8,
+    "grupos": 39380,
+    "tickets_em_grupos_com_mais_de_um": 10559,
+    "maior_grupo": 976
+  }
+}

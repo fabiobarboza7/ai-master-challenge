@@ -40,3 +40,24 @@ Cada uma será confirmada ou refutada com código. Se não se sustentarem, serã
    - Uma categoria só entra na fila automática se tiver **≥ 85% de precisão** acima do corte na validação.
    - Sensibilidade a 85% e 95% será reportada.
 4. **Política de risco (Fabio, D3):** qualquer ticket de **reembolso ou cancelamento** vai para humano, independentemente da confiança do modelo.
+
+---
+
+## Adendo 1 — 15/09 16:17, depois das auditorias e antes de treinar qualquer classificador
+
+A auditoria do Dataset 2 mostrou que 12,3% dos tickets têm um quase-duplicado (cosseno ≥ 0,9). Isso confirma que a divisão por grupos (regra C2) é necessária. Critérios fixados antes de treinar:
+
+1. **Critério de escolha do modelo:** maior **cobertura da fila automática com ≥ 90% de precisão**, medida na validação. É a métrica que vira hora economizada; acurácia geral não é.
+   - Diferenças menores que 1 ponto contam como empate.
+   - No empate vence o modelo menor, porque ele vai rodar no navegador do protótipo.
+2. **Candidatos:**
+   - Classe majoritária.
+   - Vizinho mais próximo (cosseno).
+   - TF-IDF + regressão logística, com vocabulário de 5 mil, 20 mil e 50 mil termos.
+   - TF-IDF + SVM linear calibrado.
+   - TF-IDF + Naive Bayes complementar.
+3. **Três filas:**
+   - **AUTO:** confiança ≥ τ_auto e categoria elegível (regra C3), exceto reembolso/cancelamento.
+   - **ASSISTIDA:** confiança entre τ_assist e τ_auto; o atendente vê as 2 categorias mais prováveis e confirma com um clique. τ_assist é o menor corte em que as 2 sugestões contêm a categoria certa em ≥ 90% dos tickets dessa faixa, na validação.
+   - **HUMANA:** o restante, com triagem manual completa.
+4. **Medida do vazamento:** reportar a acurácia com divisão aleatória **e** com divisão por grupos. A diferença é o quanto uma avaliação ingênua superestimaria o modelo.
