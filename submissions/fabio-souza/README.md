@@ -7,6 +7,8 @@
 - **Challenge escolhido:** 002 — Redesign de Suporte
 - **Protótipo rodando:** **https://triagem-assistida.vercel.app**
 
+Sou graduado em Análise e Desenvolvimento de Sistemas e programo há 15 anos. Antes do ChatGPT existir eu já entregava cibersegurança e machine learning para empresas americanas, então IA aqui não é virada de carreira recente. Liderei times e toquei minha própria startup — é de onde vem o hábito de perguntar primeiro quanto custa o erro, e só depois qual modelo usar.
+
 ---
 
 ## Executive Summary
