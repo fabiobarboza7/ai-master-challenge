@@ -43,19 +43,17 @@ bash run_all.sh        # baixa os dados (sem credencial), roda a análise, 268 t
 cd app && pnpm dev     # http://localhost:3000
 ```
 
-Só o protótipo, sem Python: `cd solution/app && pnpm install && pnpm dev`. Os dados do modelo já estão exportados.
-
-A reprodução foi verificada num clone limpo do branch. Todas as saídas saíram idênticas byte a byte, exceto o ECE do SVM calibrado, que diverge na 9ª casa decimal por ruído numérico.
+Só o protótipo, sem Python: `cd solution/app && pnpm install && pnpm dev`. Verificado num clone limpo do branch: saídas idênticas byte a byte, exceto o ECE do SVM na 9ª casa decimal.
 
 ### Abordagem
 
-1. **Entender o que o desafio cobra, antes de escolher qual fazer.** Além das regras e do template, a IA leu as reviews públicas deste repositório — o avaliador comenta nos PRs à vista de todos — e tirou de lá três exigências que não estão escritas no enunciado: o process log precisa ser auditável, o repositório precisa estar limpo e a entrega precisa reproduzir na máquina de quem avalia. Escolhi o **002** por pedir protótipo, que é onde meu perfil de dev rende mais. Nenhum código ou texto de outro candidato foi usado, e os problemas de dados citados nessas reviews entraram aqui como **alegações a verificar**, nunca como fatos.
-2. **Decidir os limites antes de olhar os dados.** O Fabio definiu que reembolso e cancelamento nunca são automatizados. As hipóteses e as regras de decisão foram pré-registradas por escrito antes da análise ([`process-log/hipoteses-pre-registradas.md`](process-log/hipoteses-pre-registradas.md)).
-3. **Auditar os dois datasets antes de calcular qualquer indicador.** Testes corrigidos para múltiplas comparações, tamanho de efeito e poder estatístico.
-4. **Escolher o modelo pela métrica que vira hora economizada**: a cobertura da fila automática com acerto ≥ 90% por ticket, e não a acurácia. A divisão treino/teste é por grupos de quase-duplicados, para não inflar o resultado.
-5. **Testar o que acontece fora do domínio de treino**, aplicando o modelo ao texto do Dataset 1.
-6. **Calcular o ROI como fórmula**, com a origem de cada insumo: medido, premissa, brief ou decisão do Fabio.
-7. **Construir o protótipo com paridade testada contra o Python.** Levar as decisões de negócio ao Fabio com os números na mão, e devolver a ele, no fim, as decisões de operação que ainda estavam com a IA (checkpoints 2 e 3).
+1. **Ler as reviews públicas antes de escolher o desafio.** O avaliador comenta nos PRs à vista de todos, e de lá saem três exigências que o enunciado não diz: process log auditável, repositório limpo, entrega que reproduza. Escolhi o **002** por pedir protótipo. Nenhum código ou texto de outro candidato foi usado; os problemas de dados citados nessas reviews entraram como **alegações a verificar**.
+2. **Fixar os limites antes de olhar os dados.** Reembolso e cancelamento nunca são automatizados — decidido por mim antes da análise, junto com as hipóteses [pré-registradas por escrito](process-log/hipoteses-pre-registradas.md).
+3. **Auditar os dois datasets antes de calcular indicador**, com correção para múltiplas comparações, tamanho de efeito e poder estatístico.
+4. **Escolher o modelo pela métrica que vira hora economizada**: cobertura da fila automática com acerto ≥ 90% por ticket, não acurácia. A divisão treino/teste é por grupos de quase-duplicados, para não inflar o resultado.
+5. **Testar o modelo fora do domínio de treino**, aplicando-o ao texto do Dataset 1.
+6. **Calcular o ROI como fórmula**, com a origem declarada de cada insumo: medido, premissa, brief ou decisão minha.
+7. **Construir o protótipo com paridade testada contra o Python**, e trazer as decisões de negócio para mim com os números na mão (checkpoints 2 e 3).
 
 ### Resultados / Findings
 
@@ -75,20 +73,20 @@ A reprodução foi verificada num clone limpo do branch. Todas as saídas saíra
 
 ### Recomendações
 
-1. **Semana 0: registrar cinco eventos por ticket** (abertura, mudanças de fila, interações, resolução, satisfação ligada ao ticket). Sem isso, "onde perdemos tempo" continua sem resposta.
-2. **Criar o formulário estruturado para pedidos de compra.** É a automação de maior retorno por esforço, e não usa IA.
-3. **Pilotar a triagem em três filas por 6 semanas.** Duas em modo sombra com tickets rotulados da própria operação (meta: 5 mil), depois fila automática com critérios explícitos de continuar ou voltar ([`proposta-de-automacao.md`](docs/proposta-de-automacao.md)).
-4. **Sugerir ao atendente a resposta do ticket gêmeo.** Nunca fechar como duplicado sem uma pessoa.
-5. **Manter com pessoas:** reembolso e cancelamento; concessão de acesso e RH, que a IA pode rotear mas nunca executar; tickets de baixa confiança; texto fora do domínio.
+1. **Semana 0: registrar cinco eventos por ticket** — abertura, mudanças de fila, interações, resolução e satisfação ligada ao ticket. Sem isso, "onde perdemos tempo" continua sem resposta.
+2. **Criar o formulário estruturado para pedidos de compra.** Maior retorno por esforço, e não usa IA.
+3. **Pilotar a triagem em três filas por 6 semanas:** duas em modo sombra com tickets rotulados da própria operação (meta: 5 mil), depois fila automática com critérios explícitos de continuar ou voltar ([`proposta-de-automacao.md`](docs/proposta-de-automacao.md)).
+4. **Sugerir a resposta do ticket gêmeo ao atendente.** Nunca fechar como duplicado sem uma pessoa.
+5. **Manter com pessoas:** reembolso e cancelamento; acesso e RH, que a IA roteia mas nunca executa; baixa confiança; texto fora do domínio.
 
 ### Limitações
 
-- **Dataset 1:** é sintético (distribuições uniformes, e-mails `example.com`, templates com placeholder), então nenhuma conclusão sobre uma operação real sai dele.
-- **Modelo:** treinado em tickets de TI interna, não transfere para suporte ao consumidor. A trava de domínio é parcial (barra 41%).
-- **Tempos e custos:** são premissas explícitas; o ROI é uma fórmula para a operação preencher.
-- **Corte da fila automática:** levemente otimista. O acerto no corte foi 90,5% na validação e ~88% no teste; por isso o piloto recalibra e monitora a taxa de correção.
-- **Regra por palavra-chave:** tem falsos positivos ("cancel meeting" em TI, 0,7% dos tickets). O custo foi aceito explicitamente (D14), para não depender do cliente acertar o campo de tipo.
-- **Protótipo:** demonstra a política de filas, sem integração com help desk, login ou geração de respostas por IA.
+- **Dataset 1 é sintético** (distribuições uniformes, e-mails `example.com`, templates com placeholder): nenhuma conclusão sobre uma operação real sai dele.
+- **O modelo não transfere.** Treinado em TI interna, erra em suporte ao consumidor, e a trava de domínio é parcial (barra 41%).
+- **Tempos e custos são premissas.** O ROI é uma fórmula para a operação preencher, não um número dela.
+- **O corte da fila automática é levemente otimista:** 90,5% de acerto na validação e ~88% no teste. Por isso o piloto recalibra e monitora a taxa de correção.
+- **A regra por palavra-chave tem falso positivo** ("cancel meeting" em TI, 0,7%). Custo aceito de propósito (D14), para não depender do cliente acertar o campo de tipo.
+- **O protótipo demonstra a política de filas,** sem integração com help desk, login ou resposta gerada por IA.
 
 ---
 
@@ -109,12 +107,12 @@ A reprodução foi verificada num clone limpo do branch. Todas as saídas saíra
 ### Workflow
 
 1. **15:30** — Escolha do desafio: regras, template e reviews públicas, para saber o que é cobrado além do enunciado.
-2. **16:01–16:06** — Checkpoint 1: o Fabio define a política de risco; hipóteses delegadas e pré-registradas.
+2. **16:01–16:06** — Checkpoint 1: defino a política de risco; hipóteses delegadas à IA e pré-registradas.
 3. **16:10–16:52** — Auditorias, classificador, mudança de domínio, curva de aprendizado e ROI, em 9 commits.
-4. **16:36–16:41** — Checkpoint 2: decisões de negócio do Fabio (precisão, regra, acesso/RH, custo/hora).
+4. **16:36–16:41** — Checkpoint 2: minhas decisões de negócio (precisão, regra de corte, acesso/RH, custo/hora).
 5. **17:00–19:15** — Protótipo, paridade Python ↔ TypeScript, verificação visual, reprodução num clone limpo e documentação.
 6. **19:30–19:50** — Conferência final: cada número dos documentos conferido contra o JSON que ele cita (dois não batiam, E15).
-7. **19:54** — Checkpoint 3: a IA devolveu as decisões de operação que ainda estavam com ela; o Fabio decidiu três (critério do piloto, falsos positivos da regra de risco, ordem de execução) e delegou uma de volta.
+7. **19:54** — Checkpoint 3: a IA devolveu as decisões de operação que ainda estavam com ela; decidi três (critério do piloto, falso positivo da regra de risco, ordem de execução) e deleguei uma de volta.
 8. **20:10** — Auditoria contra o enunciado item a item: fechou uma pergunta que estava sem resposta (E17) e tirou da entrega estatística sobre outros candidatos.
 
 ### Onde a IA errou e como corrigi
@@ -127,19 +125,19 @@ Dezessete, todos com evidência em [`process-log/erros-da-ia.md`](process-log/er
 
 ### O que eu adicionei que a IA sozinha não faria
 
-Nada de código. O que eu fiz foi decidir onde a IA não manda, e a que horas — está em [`decisoes.md`](process-log/decisoes.md), com quem decidiu marcado linha a linha.
+Nada de código. O que eu fiz foi decidir onde a IA não manda, e a que horas — em [`decisoes.md`](process-log/decisoes.md), com quem decidiu marcado linha a linha.
 
-**Os limites vieram antes dos dados.** Respondi às 16:06 que reembolso e cancelamento nunca são resolvidos sem uma pessoa. Os arquivos já estavam baixados, mas nenhuma coluna tinha sido lida: a primeira inspeção de conteúdo no log é das 16:07. Por isso essa regra roda **antes** do classificador no fluxo, e não como exceção acrescentada depois. Decidida na ordem inversa, ela teria saído da capacidade do modelo, e não do risco do negócio — e a diferença aparece na regra por palavra-chave: ela manda 0,7% dos tickets de TI para humano à toa, e eu aceitei esse custo em vez de confiar só no campo de tipo, que o cliente preenche errado.
+**Os limites vieram antes dos dados.** Respondi às 16:06 que reembolso e cancelamento nunca são resolvidos sem uma pessoa; a primeira leitura de conteúdo dos arquivos no log é das 16:07. Por isso essa regra roda **antes** do classificador, e não como exceção acrescentada depois — decidida na ordem inversa, ela teria saído da capacidade do modelo, não do risco do negócio. A consequência prática: aceitei que a regra mande 0,7% dos tickets de TI para humano à toa, em vez de confiar só no campo de tipo, que o cliente preenche errado.
 
-**Deleguei de propósito o que eu não tinha base para decidir.** Perguntado onde a operação perde tempo, respondi *"Descubra!"*. Sobre a precisão mínima da fila automática, *"Decida por mim"*. Um palpite meu ali viraria a hipótese que a análise tentaria confirmar. Em compensação, nada foi decidido no meio do caminho: as hipóteses estão pré-registradas em commit anterior aos resultados que elas governam, e quando a IA descobriu que a regra que ela mesma tinha pré-registrado era falha (E7), o desvio veio para mim aprovar, em vez de ser corrigido em silêncio.
+**Deleguei de propósito o que eu não tinha base para decidir.** Sobre onde a operação perde tempo, respondi *"Descubra!"*; sobre a precisão mínima, *"Decida por mim"*. Um palpite meu ali viraria a hipótese que a análise tentaria confirmar. Em troca, nada foi decidido no meio do caminho: as hipóteses estão pré-registradas em commit anterior aos resultados que governam, e quando a IA descobriu que a própria regra pré-registrada era falha (E7), o desvio veio para mim aprovar.
 
-**Com os números na mão, puxei para o lado conservador.** R$ 35/h em vez de R$ 50/h, sem recomendação da IA para nenhum dos dois: com o valor maior, a economia anunciada subiria 43% sem um minuto a mais de ganho real. Em acesso e RH, a IA só roteia; conceder continua com uma pessoa. No piloto, fiquei no critério do meio: a fila automática se desliga se o acerto cair abaixo de 95%, ou seja 1,4 ponto abaixo dos 96,4% que o teste mediu. Recusei o mais frouxo, que daria 3,4 pontos de folga, e não fui ao mais duro (97%) porque ele provavelmente deixaria o piloto restrito a duas ou três categorias e eu não teria o que medir.
+**Com os números na mão, puxei para o conservador.** R$ 35/h em vez de R$ 50/h, sem recomendação da IA para nenhum dos dois: o valor maior inflaria a economia anunciada em 43% sem um minuto a mais de ganho real. Em acesso e RH, a IA só roteia. No piloto, fiquei no critério do meio — desliga abaixo de 95% de acerto, 1,4 ponto abaixo dos 96,4% medidos: recusei o mais frouxo, e não fui ao mais duro porque ele restringiria o piloto a duas ou três categorias e eu não teria o que medir.
 
-**A ordem de execução é minha, e ela contraria o pedido do brief.** O brief pede automação com IA; a primeira coisa da minha lista é um formulário que não usa IA. A triagem, que é o pedido literal, vem depois — porque 976 pedidos de compra idênticos são ganho garantido e sem risco, enquanto a triagem depende de um modelo treinado em dados que essa operação ainda não tem. A alternativa de começar pela triagem estava na mesa, com o maior ganho isolado (34,7 h/mês), e eu não a escolhi.
+**A ordem de execução é minha, e contraria o pedido do brief.** O brief pede automação com IA; o primeiro item da minha lista é um formulário que não usa IA. A triagem, que é o pedido literal, vem depois: 976 pedidos de compra idênticos são ganho garantido, enquanto a triagem depende de um modelo treinado em dados que a operação ainda não tem. Começar pela triagem estava na mesa, com o maior ganho isolado, e eu não escolhi.
 
-**O protótipo roda sobre um scaffold Next.js que eu já tinha.** A IA removeu o que não era usado e escreveu a lógica de triagem em cima dele; a base, as escolhas de stack e o ambiente de build são meus, e é por isso que o `pnpm build` fecha limpo em vez de virar uma tarde de configuração.
+**O protótipo roda sobre um scaffold Next.js meu.** A IA removeu o que não era usado e escreveu a lógica de triagem em cima dele.
 
-**O que a IA decidiu está escrito que foi a IA.** O modelo, os cortes de confiança, o múltiplo do custo do erro e as hipóteses são dela, marcados como tal em `decisoes.md`. Em três das quatro perguntas do checkpoint 2, eu segui a recomendação dela. Prefiro entregar isso a uma lista de decisões que eu não saberia defender numa conversa.
+**O que a IA decidiu está escrito que foi a IA:** o modelo, os cortes de confiança, o múltiplo do custo do erro e as hipóteses. Em três das quatro perguntas do checkpoint 2, segui a recomendação dela. Prefiro entregar isso a uma lista de decisões que eu não saberia defender numa conversa.
 
 ---
 
@@ -147,9 +145,9 @@ Nada de código. O que eu fiz foi decidir onde a IA não manda, e a que horas �
 
 - [ ] Screenshots das conversas com IA
 - [ ] Screen recording do workflow
-- [ ] Chat exports — optei por não publicar a transcrição bruta da sessão. O que ela provaria está reconstruído de forma verificável: as perguntas e respostas dos dois checkpoints estão transcritas literalmente em [`decisoes.md`](process-log/decisoes.md), com horário, e a ordem dos acontecimentos é conferível no `git log`
+- [ ] Chat exports — optei por não publicar a transcrição bruta. O que ela provaria está em [`decisoes.md`](process-log/decisoes.md): as perguntas e as minhas respostas nos **três checkpoints**, literais e com horário. A ordem dos acontecimentos se confere no `git log`
 - [x] Git history: commits incrementais, cada mensagem dizendo o que mudou e o que corrigiu. As hipóteses e o critério do modelo estão em commits **anteriores** aos resultados que governam
-- [x] Outro: 9 capturas do protótipo rodando em [`process-log/screenshots`](process-log/screenshots), hipóteses pré-registradas, decisões com as respostas literais do Fabio, 268 testes automatizados (10 Python + 258 TypeScript) e `run_all.sh`, que refaz tudo do zero
+- [x] Outro: 9 capturas do protótipo em [`process-log/screenshots`](process-log/screenshots), hipóteses pré-registradas, 268 testes automatizados (10 Python + 258 TypeScript) e `run_all.sh`, que refaz tudo do zero
 
 ---
 
