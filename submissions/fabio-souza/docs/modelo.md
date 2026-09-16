@@ -9,7 +9,7 @@ Classificar o texto de tickets de TI em 8 categorias e decidir entre fila autom�
 
 ## Dados e divisão
 
-- **Treino:** Dataset 2 (IT Service Ticket Classification), 47.837 tickets reais, já em minúsculas e sem dígitos. Categorias: Hardware 28,5%, HR Support 22,8%, Access 14,9%, Miscellaneous 14,8%, Storage 5,8%, Purchase 5,2%, Internal Project 4,4%, Administrative rights 3,7%.
+- **Treino:** Dataset 2 (IT Service Ticket Classification), 47.837 tickets reais **em inglês**, já em minúsculas e sem dígitos. O vocabulário do modelo é inglês; texto em português cai na trava de domínio. Categorias: Hardware 28,5%, HR Support 22,8%, Access 14,9%, Miscellaneous 14,8%, Storage 5,8%, Purchase 5,2%, Internal Project 4,4%, Administrative rights 3,7%.
 - **Divisão:** 70/15/15 (32.889 / 7.922 / 7.026), estratificada e **por grupos de quase-duplicados** (cosseno ≥ 0,8), para que textos quase iguais não fiquem de lados diferentes.
   - Com divisão aleatória, a acurácia seria **86,8%** e não 84,9%; a cobertura automática, 58,7% e não 54,7%, recalculando os cortes em cada conjunto.
 - **Seleção:** modelo e cortes escolhidos só na validação.

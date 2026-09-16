@@ -98,6 +98,7 @@ Só o protótipo, sem Python: `cd solution/app && pnpm install && pnpm dev`. Ver
 ### Limitações
 
 - **Dataset 1 é sintético** (distribuições uniformes, e-mails `example.com`, templates com placeholder): nenhuma conclusão sobre uma operação real sai dele.
+- **Os dois datasets são em inglês,** então o modelo só entende inglês. Para uma operação brasileira ele precisa ser treinado do zero com os tickets dela — a curva de aprendizado diz quantos: 1 mil rotulados dão 25% de fila automática, 5 mil dão 40%. Enquanto isso não acontece, a trava de domínio manda todo texto em português para uma pessoa, que é o comportamento correto e está demonstrado no protótipo.
 - **O modelo não transfere.** Treinado em TI interna, erra em suporte ao consumidor, e a trava de domínio é parcial (barra 41%).
 - **Tempos e custos são premissas.** O ROI é uma fórmula para a operação preencher, não um número dela.
 - **O corte da fila automática é levemente otimista:** 90,5% de acerto na validação e ~88% no teste. Por isso o piloto recalibra e monitora a taxa de correção.

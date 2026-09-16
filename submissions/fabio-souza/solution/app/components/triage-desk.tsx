@@ -64,6 +64,12 @@ export function TriageDesk({ thresholds, target }: { thresholds: Thresholds; tar
         Cole um ticket de suporte. O modelo decide se ele segue direto para a fila certa, se um
         atendente confirma a sugestão ou se precisa de triagem humana, e mostra o motivo.
       </p>
+      <p className="mt-3 max-w-2xl text-ink-3">
+        Os exemplos estão <strong className="font-medium text-ink-2">em inglês</strong> porque os dois
+        datasets do desafio são em inglês, e traduzi-los quebraria a paridade com a análise. Escreva em
+        português para ver a trava de domínio agir: o modelo não reconhece as palavras e manda o ticket
+        para uma pessoa, em vez de chutar.
+      </p>
 
       <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
         <div>
@@ -93,8 +99,8 @@ export function TriageDesk({ thresholds, target }: { thresholds: Thresholds; tar
             ))}
           </select>
 
-          <ExamplePicker title="Sorteados do teste (tickets reais de TI)" items={fromTest} onPick={choose} active={picked} />
-          <ExamplePicker title="Sorteados do Dataset 1 (suporte ao consumidor)" items={fromDs1} onPick={choose} active={picked} />
+          <ExamplePicker title="Sorteados do teste (tickets reais de TI, em inglês)" items={fromTest} onPick={choose} active={picked} />
+          <ExamplePicker title="Sorteados do Dataset 1 (suporte ao consumidor, em inglês)" items={fromDs1} onPick={choose} active={picked} />
           <ExamplePicker title="Para testar as regras" items={WRITTEN} onPick={choose} active={picked} />
         </div>
 
