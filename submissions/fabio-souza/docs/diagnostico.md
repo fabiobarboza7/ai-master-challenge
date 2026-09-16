@@ -16,6 +16,9 @@ Respostas às três perguntas do Diretor de Operações. Cada número vem de `so
 - **Janela impossível:** todas as primeiras respostas e resoluções dos 8.469 tickets cabem numa janela de **27 horas** (31/05/2023 21:53 a 02/06/2023 00:55). Uma operação de ~30 mil tickets/ano (número do brief) não resolve um ano de tickets em um dia.
 - **Ordem invertida:** em **49,3%** dos 2.769 tickets fechados, a resolução acontece **antes** da primeira resposta. As diferenças vão de −23,2 h a +23,5 h, com mediana de +0,2 h: o padrão de dois horários sorteados no mesmo dia.
 - **Nada varia entre segmentos:** tickets não fechados são 66–70% em todos os canais, prioridades e tipos (teste χ², nenhuma associação após correção de Holm). Tickets **Critical** ficam sem primeira resposta com a mesma frequência que os **Low** (32,5% vs. 33,7%).
+- **Nem entre combinações.** A pergunta do Diretor é sobre *combinações*, então as **80 células** de canal × prioridade × tipo foram testadas uma a uma contra o resto. A pior delas parece alarmante — **Phone | Low | Cancellation request, com 80,6% sem fechar** contra 67,3% na base — e some na correção para 80 comparações (p de Holm = 0,25). O intervalo entre a melhor e a pior célula vai de 56,6% a 80,6%, a dispersão que se espera de células de ~100 tickets sorteadas.
+
+> **Esta é a armadilha principal do Dataset 1.** Rankear as 80 combinações sem corrigir para múltiplas comparações produz um "gargalo" com nome, número e aparência de achado — e a recomendação que sai dele manda a operação reorganizar o atendimento telefônico de cancelamento de baixa prioridade por causa de ruído.
 - **Volume:** o arquivo tem 8.469 tickets, **28%** dos ~30 mil/ano do brief. Pela janela de 27 horas, ele não serve para medir volume.
 
 ## 2. O que impacta a satisfação?

@@ -61,7 +61,7 @@ A reprodução foi verificada num clone limpo do branch. Todas as saídas saíra
 
 | Pergunta | Achado | Evidência |
 |---|---|---|
-| Onde o fluxo trava? | **Não calculável.** Não há data de abertura; todas as respostas e resoluções cabem em 27 horas; nenhum canal, prioridade ou tipo difere dos outros | [`diagnostico.md` §1](docs/diagnostico.md) |
+| Onde o fluxo trava? | **Não calculável.** Não há data de abertura e tudo cabe numa janela de 27 h. As **80 combinações** de canal × prioridade × tipo foram testadas: a pior (80,6% sem fechar) não sobrevive à correção para múltiplas comparações | [`diagnostico.md` §1](docs/diagnostico.md) |
 | O que impacta a satisfação? | **Nada no dado atual.** 9 testes, zero efeitos após Holm; o único p < 0,05 some com a correção | [`diagnostico.md` §2](docs/diagnostico.md) |
 | Quanto desperdiçamos? | **Função, não número.** 34,7 h/mês na base do brief (5,3 a 169,6 h). A maior incerteza é o tempo de triagem manual | [`06_roi.json`](solution/analysis/outputs/06_roi.json) |
 | O que automatizar? | Triagem em 3 filas: **61,4% automáticos com 96,4% de acerto** (IC 95%: 95,8–96,9%), 26,4% assistidos (certa entre 2 sugestões em 94%), 12,2% humanos | [`modelo.md`](docs/modelo.md) |
@@ -118,7 +118,7 @@ A reprodução foi verificada num clone limpo do branch. Todas as saídas saíra
 
 ### Onde a IA errou e como corrigi
 
-Dezesseis, todos com evidência em [`process-log/erros-da-ia.md`](process-log/erros-da-ia.md): oito mudaram uma conclusão, oito foram pegos antes de virarem problema. Os três que mais custariam:
+Dezessete, todos com evidência em [`process-log/erros-da-ia.md`](process-log/erros-da-ia.md): nove mudaram uma conclusão, oito foram pegos antes de virarem problema. Os três que mais custariam:
 
 - **E7 — a regra que a própria IA pré-registrou era falha.** "Precisão média ≥ 90%" aceitava tickets que acertam 0–52%, escondidos na média. Virou uma regra por ticket, e o desvio foi levado a mim para confirmar em vez de ser corrigido em silêncio.
 - **E9 — número inflado.** A trava de domínio foi reportada barrando 95% do texto estranho, inclusive numa mensagem de commit. O certo é 41%, e a correção está num commit explícito.

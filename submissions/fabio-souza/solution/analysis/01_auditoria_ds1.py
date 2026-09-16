@@ -30,6 +30,7 @@ from common import (
 
 BRIEF_TICKETS_PER_YEAR = 30_000
 ALPHA = 0.05
+MIN_CELULA = 30  # células menores não têm poder para nada; ficam de fora com a contagem declarada
 
 df = load_ds1()
 n = len(df)
@@ -205,6 +206,39 @@ res["fluxo"] = {"fracao_nao_fechados": float(df["nao_fechado"].mean()),
                 "fracao_sem_1a_resposta": float(df["sem_1a_resposta"].mean()),
                 "testes": flow,
                 "algum_significativo_apos_holm": any(t["p_holm"] < ALPHA for t in flow.values())}
+
+# ---------------------------------------------------------------- combinações canal x prioridade x tipo
+# O enunciado pergunta quais COMBINAÇÕES geram os piores tempos, não quais variáveis isoladas.
+# Cada célula é testada contra todo o resto (χ² 2x2), com Holm sobre as 80 comparações.
+df["celula"] = df["Ticket Channel"] + " | " + df["Ticket Priority"] + " | " + df["Ticket Type"]
+df["gap_h"] = closed["gap_h"]  # só os fechados têm gap; o resto fica NaN
+cells, pv = {}, {}
+for name, sub in df.groupby("celula"):
+    if len(sub) < MIN_CELULA:
+        continue
+    table = pd.DataFrame({"celula": [int(sub["nao_fechado"].sum()), int((~sub["nao_fechado"]).sum())],
+                          "resto": [int(df.loc[df["celula"] != name, "nao_fechado"].sum()),
+                                    int((~df.loc[df["celula"] != name, "nao_fechado"]).sum())]})
+    v, p, _ = cramers_v(table.T)
+    cells[name] = {"tickets": int(len(sub)), "fracao_nao_fechados": round(float(sub["nao_fechado"].mean()), 4),
+                   "gap_mediano_horas": (round(float(sub["gap_h"].median()), 3)
+                                         if sub["gap_h"].notna().any() else None),
+                   "v_cramer": v, "p": p}
+    pv[name] = p
+for name, p_adj in holm(pv).items():
+    cells[name]["p_holm"] = p_adj
+piores = sorted(cells.items(), key=lambda kv: -kv[1]["fracao_nao_fechados"])
+res["combinacoes"] = {
+    "definicao": "canal × prioridade × tipo; cada célula testada contra o resto (χ², Holm)",
+    "celulas_testadas": len(cells),
+    "tickets_minimos_por_celula": MIN_CELULA,
+    "celulas_ignoradas_por_tamanho": int(df["celula"].nunique() - len(cells)),
+    "faixa_de_nao_fechados": [round(piores[-1][1]["fracao_nao_fechados"], 4),
+                              round(piores[0][1]["fracao_nao_fechados"], 4)],
+    "piores_5": [{"combinacao": k, **v} for k, v in piores[:5]],
+    "algum_significativo_apos_holm": any(c["p_holm"] < ALPHA for c in cells.values()),
+    "menor_p_holm": min(c["p_holm"] for c in cells.values()) if cells else None,
+}
 
 save_json(OUT / "01_auditoria_ds1.json", res)
 

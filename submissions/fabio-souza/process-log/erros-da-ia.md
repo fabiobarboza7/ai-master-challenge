@@ -1,11 +1,11 @@
 # Onde a IA errou e como corrigi
 
-Dezesseis erros reais desta sessão. Oito mudaram um número ou uma conclusão e estão detalhados;
+Dezessete erros reais desta sessão. Nove mudaram um número ou uma conclusão e estão detalhados;
 oito foram pegos antes de virarem problema e estão resumidos no fim.
 
 Os que geraram correção de código aparecem como commits `fix:` no `git log`.
 
-## Os oito que mudaram uma conclusão
+## Os nove que mudaram uma conclusão
 
 | # | Erro | Como foi pego | O que mudou |
 |---|------|---------------|-------------|
@@ -16,6 +16,7 @@ Os que geraram correção de código aparecem como commits `fix:` no `git log`.
 | **E3** | Kolmogorov-Smirnov aplicado à idade, que é inteira. Os empates geraram p = 0,001 ("idade não uniforme") | O p destoava de todas as outras distribuições | Qui-quadrado: p = 0,55. Sem a correção, um falso achado contradiria a conclusão certa |
 | **E4** | V de Cramér sem correção de viés: com 42 produtos × 16 assuntos, dá ~0,07 **mesmo com campos sorteados** | V = 0,070 com p = 1,0 é contraditório | V de Bergsma (2013): todos os pares entre 0,000 e 0,016. Sem isso, associações inexistentes apareceriam como reais |
 | **E15** | Dois números escritos à mão não batiam com o JSON que citam: "treinado em 47.837 tickets" e "testado em 7.026 que nunca viu" (os 7.026 **fazem parte** dos 47.837; o treino são 32.889), e F1 0,85 para o modelo escolhido, que tem 0,844 | Conferência final de cada número contra a sua fonte, relendo os JSON por script | Números corrigidos. A tabela de candidatos passou a mostrar os 10 comparados, e não 7, com a ressalva de que o escolhido não é o melhor em acurácia nem em F1 |
+| **E17** | **A IA respondeu uma pergunta diferente da que o enunciado fez.** O desafio pergunta quais *combinações* de canal, prioridade e tipo geram os piores tempos; a auditoria testava as três variáveis **isoladas** e concluía "nada varia entre segmentos" | Releitura do enunciado item a item, conferindo cada pedido contra o que a entrega respondia | Teste das **80 células** de canal × prioridade × tipo, cada uma contra o resto, com Holm. A conclusão continua a mesma, mas agora responde o que foi perguntado — e rende o achado mais forte do diagnóstico: a pior célula tem 80,6% sem fechar contra 67,3% da base e **não sobrevive à correção** | Deixar sem resposta um item explícito do enunciado, e perder a demonstração da armadilha que o desafio testa |
 | **E16** | A seção "o que eu adicionei" dizia que o critério do piloto era **mais exigente** que o teste. Exigir ≥ 95% quando o teste mediu 96,4% é o contrário | Revisor-IA, lendo a seção já commitada | Texto trocado pelo que o log sustenta. Na mesma passada caiu o "antes de a IA abrir qualquer CSV": os arquivos já estavam baixados, e o certo é que nenhuma coluna tinha sido lida (primeira inspeção às 16:07, depois da resposta das 16:06) |
 
 ## Os oito pegos antes de virarem problema

@@ -402,5 +402,64 @@
       }
     },
     "algum_significativo_apos_holm": false
+  },
+  "combinacoes": {
+    "definicao": "canal × prioridade × tipo; cada célula testada contra o resto (χ², Holm)",
+    "celulas_testadas": 80,
+    "tickets_minimos_por_celula": 30,
+    "celulas_ignoradas_por_tamanho": 0,
+    "faixa_de_nao_fechados": [
+      0.566,
+      0.8056
+    ],
+    "piores_5": [
+      {
+        "combinacao": "Phone | Low | Cancellation request",
+        "tickets": 108,
+        "fracao_nao_fechados": 0.8056,
+        "gap_mediano_horas": -3.183,
+        "v_cramer": 0.03021176876926132,
+        "p": 0.0031313785825299472,
+        "p_holm": 0.25051028660239577
+      },
+      {
+        "combinacao": "Social media | High | Cancellation request",
+        "tickets": 99,
+        "fracao_nao_fechados": 0.798,
+        "gap_mediano_horas": 0.308,
+        "v_cramer": 0.026851175791809886,
+        "p": 0.007685102640887592,
+        "p_holm": 0.6071231086301198
+      },
+      {
+        "combinacao": "Email | Medium | Product inquiry",
+        "tickets": 101,
+        "fracao_nao_fechados": 0.7921,
+        "gap_mediano_horas": 5.65,
+        "v_cramer": 0.025674361682518757,
+        "p": 0.01030154472226069,
+        "p_holm": 0.8035204883363338
+      },
+      {
+        "combinacao": "Social media | Medium | Technical issue",
+        "tickets": 124,
+        "fracao_nao_fechados": 0.7581,
+        "gap_mediano_horas": -0.192,
+        "v_cramer": 0.01923709045926424,
+        "p": 0.0420340166797421,
+        "p_holm": 1.0
+      },
+      {
+        "combinacao": "Social media | Medium | Cancellation request",
+        "tickets": 102,
+        "fracao_nao_fechados": 0.7549,
+        "gap_mediano_horas": -4.85,
+        "v_cramer": 0.01591093176037425,
+        "p": 0.07621333987975869,
+        "p_holm": 1.0
+      }
+    ],
+    "algum_significativo_apos_holm": false,
+    "menor_p_holm": 0.25051028660239577
   }
 }
