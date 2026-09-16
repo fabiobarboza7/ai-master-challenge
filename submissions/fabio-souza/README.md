@@ -24,6 +24,10 @@
 
 **Recomendação principal:** registrar cinco eventos por ticket e rodar um piloto de 6 semanas em modo sombra, com o modelo treinado nos tickets da própria operação. O modelo atual não transfere para suporte ao consumidor.
 
+![Tela de roteamento: um ticket de TI cai na fila automática com 89% de confiança, e o painel à direita numera as quatro regras que levaram a essa decisão](process-log/screenshots/01-rotear-fila-automatica.png)
+
+<p align="center"><em>Cada decisão vem com o motivo numerado e as palavras que mais pesaram — nada de caixa-preta. <a href="https://triagem-assistida.vercel.app">Experimente aqui</a>.</em></p>
+
 ---
 
 ## Solução
@@ -68,9 +72,20 @@ Só o protótipo, sem Python: `cd solution/app && pnpm install && pnpm dev`. Ver
 | O modelo serve para suporte ao consumidor? | **Não.** Manda 88% para Hardware, e 28,6% passariam como "confiantes". Travas simples barram no máximo 41% | [`04_transferencia_ds1.json`](solution/analysis/outputs/04_transferencia_ds1.json) |
 | Quantos dados próprios são necessários? | 1 mil tickets rotulados dão 25% de fila automática; 5 mil dão 40%; 33 mil dão 61% | [`05_curva_de_aprendizado.json`](solution/analysis/outputs/05_curva_de_aprendizado.json) |
 
-![Tickets de teste por confiança: os erros (vermelho) se concentram abaixo do corte automático](process-log/screenshots/05-teste-7026-tickets-precisao-90.png)
+![Histograma dos 7.026 tickets de teste por faixa de confiança: os erros, em vermelho, se concentram abaixo do corte da fila automática](process-log/screenshots/05-teste-7026-tickets-precisao-90.png)
 
-![Ticket com pedido de reembolso vai para uma pessoa, qualquer que seja a confiança do modelo](process-log/screenshots/02-regra-reembolso-vai-para-humano.png)
+<p align="center"><em>Os 7.026 tickets de teste por confiança. Em vermelho, o que o modelo erraria — quase tudo abaixo do corte.</em></p>
+
+### As duas travas que seguram a automação
+
+| | |
+|---|---|
+| ![Ticket de reembolso vai para uma pessoa, qualquer que seja a confiança do modelo](process-log/screenshots/02-regra-reembolso-vai-para-humano.png) | ![Ticket em português vai para triagem humana porque o modelo conhece 0% das palavras](process-log/screenshots/03-texto-fora-do-dominio-vai-para-humano.png) |
+| **Regra de negócio.** Reembolso e cancelamento vão para uma pessoa mesmo com o modelo confiante. A regra roda **antes** do classificador. | **Trava técnica.** Texto em português: o modelo conhece **0%** das palavras e para, em vez de chutar com confiança alta. |
+
+![Tela de economia: 34,7 h por mês, as premissas editáveis com a origem de cada uma, o gráfico de sensibilidade e a curva de aprendizado](process-log/screenshots/07-economia-e-sensibilidade.png)
+
+<p align="center"><em>O ROI é uma fórmula, não um número: cada premissa é editável e traz a origem declarada. A barra mais longa mostra onde vale gastar uma semana medindo.</em></p>
 
 ### Recomendações
 
@@ -88,6 +103,17 @@ Só o protótipo, sem Python: `cd solution/app && pnpm install && pnpm dev`. Ver
 - **O corte da fila automática é levemente otimista:** 90,5% de acerto na validação e ~88% no teste. Por isso o piloto recalibra e monitora a taxa de correção.
 - **A regra por palavra-chave tem falso positivo** ("cancel meeting" em TI, 0,7%). Custo aceito de propósito (D14), para não depender do cliente acertar o campo de tipo.
 - **O protótipo demonstra a política de filas,** sem integração com help desk, login ou resposta gerada por IA.
+
+<table>
+<tr>
+<td width="50%"><img src="process-log/screenshots/08-celular.png" alt="O protótipo no celular, com as colunas empilhadas"></td>
+<td width="50%"><img src="process-log/screenshots/09-modo-escuro.png" alt="O protótipo em modo escuro"></td>
+</tr>
+<tr>
+<td><em>No celular. A primeira versão tinha 6.942 px de largura — o erro E11, pego por captura de tela antes do commit.</em></td>
+<td><em>Modo escuro, com a paleta validada para daltonismo e contraste.</em></td>
+</tr>
+</table>
 
 ---
 
