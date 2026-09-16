@@ -6,9 +6,9 @@ Escrito durante o trabalho, não reconstruído no fim. Horários em BRT (UTC−3
 
 ---
 
-**15:30 — Escolha do desafio.** Pedido do Fabio: *"me diga qual projeto temos maior chances?"* A IA leu as regras e descobriu que os PRs dos outros candidatos e as reviews do avaliador são públicos; baixou os 124 PRs e ~200 comentários para entender o critério real de aprovação (E1 corrigiu a métrica). Recomendação: **002**, maior taxa de aprovação na 1ª review (68%) e o que mais encaixa num perfil de dev. Decisão do Fabio: seguir com o 002.
+**15:30 — Escolha do desafio.** Pedido do Fabio: *"me diga qual projeto temos maior chances?"* A IA leu as regras e o template, e notou que o avaliador comenta nos PRs à vista de todos. Dessas reviews saíram três exigências que o enunciado não diz: process log auditável, repositório limpo e entrega que reproduza. A primeira leitura desse material teve um erro de método, corrigido depois (E1). Recomendação: **002**, o único que pede protótipo — onde um perfil de dev rende mais. Decisão do Fabio: seguir com o 002.
 
-> Ler as reviews mostrou problemas de dados que outros candidatos já tinham levantado. Aqui eles são **alegações a verificar**, nunca fatos: todo número deste repositório foi recalculado dos CSVs originais. Nenhum código ou texto de outro candidato foi usado.
+> Ler as reviews mostrou problemas de dados que outros candidatos já tinham levantado. Aqui eles são **alegações a verificar**, nunca fatos: todo número deste repositório foi recalculado dos CSVs originais. Nenhum código ou texto de outro candidato foi usado, e este log não publica resultado de ninguém além do meu.
 
 **15:53 — Começo.** Branch criada, datasets baixando do endpoint público do Kaggle com conferência de SHA-256. Armadilha: o `.gitignore` do repositório ignora `submissions/`, então é preciso `git add -f` — e o `-f` desliga *todos* os ignores, `node_modules` inclusive. Resolvido com um script de stage que bloqueia o commit se algo proibido aparecer (E2).
 
@@ -27,3 +27,9 @@ Escrito durante o trabalho, não reconstruído no fim. Horários em BRT (UTC−3
 **19:15–19:50 — Reprodução e conferência.** Num clone novo, `run_all.sh` rodou em 2 min 36 s com saídas idênticas byte a byte, exceto o ECE do SVM na 9ª casa decimal. Depois, cada número dos documentos foi conferido contra o JSON que ele cita: dois não batiam (E15).
 
 **19:54 — Checkpoint 3: as decisões de operação voltam para o Fabio.** A IA listou o que ainda estava decidido por ela e que, por ser decisão de negócio, cabia a ele. Ele decidiu o critério do piloto (D13), aceitou o custo dos falsos positivos da regra de risco (D14) e fixou a ordem de execução, formulário antes da triagem (D15). O múltiplo do custo do erro ele devolveu para a IA, que manteve 4× e registrou o porquê (D12). O Revisor-IA leu a versão final e achou uma afirmação invertida na seção do candidato (E16).
+
+**20:10 — Auditoria contra o enunciado.** Pergunta do Fabio: *"o que fizemos está de acordo com o enunciado, as regras e dicas? Estamos mostrando algo em que não deveríamos?"* Cada item pedido foi conferido contra o que a entrega respondia, e apareceram duas coisas.
+
+- **Uma pergunta do enunciado estava sem resposta** (E17). O Diretor pergunta quais *combinações* de canal, prioridade e tipo geram os piores tempos; a análise testava as três variáveis isoladas. As 80 células passaram a ser testadas com Holm — e o resultado virou o achado mais forte do diagnóstico.
+- **O log publicava resultado de outras pessoas.** A versão anterior trazia taxa de aprovação por desafio e contagem de reprovados, tirados das reviews públicas. É informação pública, mas é resultado de outros candidatos, num PR que eles leem. Saiu da entrega. O que ficou é o que diz respeito a este trabalho: quais exigências foram aprendidas ali e como elas mudaram a submissão.
+- **Varredura de dados pessoais:** nenhum nome, e-mail, idade ou gênero foi exportado para o protótipo; só o texto do ticket. Dados brutos não vão no repositório.

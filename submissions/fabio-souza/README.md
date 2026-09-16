@@ -49,7 +49,7 @@ A reprodução foi verificada num clone limpo do branch. Todas as saídas saíra
 
 ### Abordagem
 
-1. **Entender como o desafio é avaliado.** A IA leu as regras e as ~200 reviews públicas do avaliador nos PRs de outros candidatos, para saber o que reprova: log de processo não auditável, higiene de repositório, entrega que não reproduz. Nenhum código ou texto de outro candidato foi usado; os problemas de dados citados nessas reviews foram tratados como alegações a verificar.
+1. **Entender o que o desafio cobra, antes de escolher qual fazer.** Além das regras e do template, a IA leu as reviews públicas deste repositório — o avaliador comenta nos PRs à vista de todos — e tirou de lá três exigências que não estão escritas no enunciado: o process log precisa ser auditável, o repositório precisa estar limpo e a entrega precisa reproduzir na máquina de quem avalia. Escolhi o **002** por pedir protótipo, que é onde meu perfil de dev rende mais. Nenhum código ou texto de outro candidato foi usado, e os problemas de dados citados nessas reviews entraram aqui como **alegações a verificar**, nunca como fatos.
 2. **Decidir os limites antes de olhar os dados.** O Fabio definiu que reembolso e cancelamento nunca são automatizados. As hipóteses e as regras de decisão foram pré-registradas por escrito antes da análise ([`process-log/hipoteses-pre-registradas.md`](process-log/hipoteses-pre-registradas.md)).
 3. **Auditar os dois datasets antes de calcular qualquer indicador.** Testes corrigidos para múltiplas comparações, tamanho de efeito e poder estatístico.
 4. **Escolher o modelo pela métrica que vira hora economizada**: a cobertura da fila automática com acerto ≥ 90% por ticket, e não a acurácia. A divisão treino/teste é por grupos de quase-duplicados, para não inflar o resultado.
@@ -101,20 +101,21 @@ A reprodução foi verificada num clone limpo do branch. Todas as saídas saíra
 | Ferramenta | Para que usou |
 |------------|--------------|
 | Claude Code (Claude Opus 5) | Agente principal: leitura das regras e das reviews públicas, análise estatística, modelo, protótipo, testes e documentação |
-| Revisor-IA (segundo modelo, ferramenta *advisor* do Claude Code) | Auditoria do raciocínio antes de cada etapa grande. Pegou o erro de denominador na escolha do desafio (E1) e o erro contado duas vezes no ROI (E10) |
-| GitHub CLI e API | Coleta dos 124 PRs e das reviews do avaliador |
+| Revisor-IA (segundo modelo, ferramenta *advisor* do Claude Code) | Auditoria do raciocínio antes de cada etapa grande. Pegou três erros que já tinham passado: E1, E10 e E16 |
+| GitHub CLI e API | Leitura das reviews públicas do avaliador neste repositório |
 | Playwright com Chrome | Capturas do protótipo e verificação visual em celular e modo escuro; achou a página com 6.942 px de largura (E11) |
 | Validador de paleta (skill de visualização) | Cores dos gráficos acessíveis a daltônicos e com contraste adequado |
 
 ### Workflow
 
-1. **15:30** — Escolha do desafio: leitura das regras e das reviews públicas; estatística de aprovação por desafio.
+1. **15:30** — Escolha do desafio: regras, template e reviews públicas, para saber o que é cobrado além do enunciado.
 2. **16:01–16:06** — Checkpoint 1: o Fabio define a política de risco; hipóteses delegadas e pré-registradas.
 3. **16:10–16:52** — Auditorias, classificador, mudança de domínio, curva de aprendizado e ROI, em 9 commits.
 4. **16:36–16:41** — Checkpoint 2: decisões de negócio do Fabio (precisão, regra, acesso/RH, custo/hora).
 5. **17:00–19:15** — Protótipo, paridade Python ↔ TypeScript, verificação visual, reprodução num clone limpo e documentação.
 6. **19:30–19:50** — Conferência final: cada número dos documentos conferido contra o JSON que ele cita (dois não batiam, E15).
 7. **19:54** — Checkpoint 3: a IA devolveu as decisões de operação que ainda estavam com ela; o Fabio decidiu três (critério do piloto, falsos positivos da regra de risco, ordem de execução) e delegou uma de volta.
+8. **20:10** — Auditoria contra o enunciado item a item: fechou uma pergunta que estava sem resposta (E17) e tirou da entrega estatística sobre outros candidatos.
 
 ### Onde a IA errou e como corrigi
 

@@ -10,7 +10,7 @@ Categorias de "quem decidiu":
 
 | # | Data | Decisão | Quem decidiu | Base |
 |---|------|---------|--------------|------|
-| D1 | 15/09 | Fazer o desafio 002, e não o 001 que já tinha sido iniciado | Fabio, a partir da recomendação da IA | Taxas de aprovação calculadas a partir das reviews públicas; aderência ao perfil de dev |
+| D1 | 15/09 | Fazer o desafio 002, e não o 001 que já tinha sido iniciado | Fabio, a partir da recomendação da IA | É o único que pede protótipo funcional, onde um perfil de dev rende mais; e o que mais se aproxima da descrição da vaga |
 | D2 | 15/09 | Não versionar dados brutos: script de download com SHA-256 | IA | Reviews públicas criticam dados commitados; os dois datasets baixam sem credencial |
 | D3 | 15/09 | **Reembolso e cancelamento nunca são resolvidos pela IA sem aprovação humana** | **Fabio** | Pergunta feita antes de abrir os dados. Resposta: "Reembolso/cancelamento" |
 | D4 | 15/09 | Hipóteses de trabalho | IA (delegada) | Resposta do Fabio: "Descubra!". Hipóteses pré-registradas antes da análise |

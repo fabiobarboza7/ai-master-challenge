@@ -7,7 +7,7 @@
 
 ## A. Alegações públicas a verificar (não são premissas)
 
-Reviews públicas de PRs aprovados neste desafio afirmam:
+Reviews públicas neste repositório afirmam sobre o Dataset 1:
 
 - **A1.** A satisfação (CSAT) do Dataset 1 não depende de nenhuma variável, como se tivesse sido sorteada.
 - **A2.** Em boa parte dos tickets, `Time to Resolution` vem *antes* de `First Response Time`.
