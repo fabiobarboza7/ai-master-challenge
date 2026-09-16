@@ -5,6 +5,7 @@
 - **Nome:** Fabio Souza
 - **LinkedIn:** [linkedin.com/in/fabiobarboza7](https://www.linkedin.com/in/fabiobarboza7/)
 - **Challenge escolhido:** 002 — Redesign de Suporte
+- **Protótipo rodando:** **https://triagem-assistida.vercel.app**
 
 ---
 
@@ -19,7 +20,7 @@
 - **12%** seguem para triagem humana;
 - **reembolso e cancelamento vão sempre para uma pessoa.**
 
-Um protótipo roda essa política no navegador. Na base do brief, a triagem devolve **34,7 h/mês** (R$ 1,2 mil), numa faixa de 5 a 170 h que depende sobretudo do tempo de triagem manual, mensurável em uma semana.
+**O protótipo está rodando em [triagem-assistida.vercel.app](https://triagem-assistida.vercel.app)** — cole um ticket e veja a fila, o motivo e as palavras que pesaram; ou abra o teste com os 7.026 tickets. Na base do brief, a triagem devolve **34,7 h/mês** (R$ 1,2 mil), numa faixa de 5 a 170 h que depende sobretudo do tempo de triagem manual, mensurável em uma semana.
 
 **Recomendação principal:** registrar cinco eventos por ticket e rodar um piloto de 6 semanas em modo sombra, com o modelo treinado nos tickets da própria operação. O modelo atual não transfere para suporte ao consumidor.
 
@@ -32,7 +33,7 @@ Um protótipo roda essa política no navegador. Na base do brief, a triagem devo
 | Diagnóstico operacional | [`docs/diagnostico.md`](docs/diagnostico.md) |
 | Proposta de automação: fluxo, o que não automatizar, piloto | [`docs/proposta-de-automacao.md`](docs/proposta-de-automacao.md) |
 | Ficha do modelo | [`docs/modelo.md`](docs/modelo.md) |
-| Protótipo (Next.js, roda no navegador) | [`solution/app`](solution/app) |
+| **Protótipo rodando** | **[triagem-assistida.vercel.app](https://triagem-assistida.vercel.app)** · código em [`solution/app`](solution/app) |
 | Análise reproduzível (Python, 7 scripts, testes) | [`solution/analysis`](solution/analysis) |
 
 **Como rodar tudo do zero** (~3 min; requer [uv](https://docs.astral.sh/uv/) ou Python 3.12, Node 20+ e pnpm):

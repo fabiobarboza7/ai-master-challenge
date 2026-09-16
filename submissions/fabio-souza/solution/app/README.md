@@ -1,5 +1,7 @@
 # Triagem assistida: protótipo
 
+Rodando em **https://triagem-assistida.vercel.app** (exportação estática, sem back-end).
+
 Aplicação 100% no navegador. Recebe um ticket e decide entre três filas:
 
 - **automática:** segue direto para a fila certa;

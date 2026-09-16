@@ -25,6 +25,7 @@ Categorias de "quem decidiu":
 | D13 | 15/09 19:54 | Critério para manter a fila automática ligada no piloto: **acerto ≥ 95% por 2 semanas e correções humanas ≤ 5%** | **Fabio** (confirmou a proposta da IA, vendo as alternativas) | Alternativas mostradas: mais duro (≥ 97% / ≤ 3%, que provavelmente restringe o piloto a poucas categorias) e mais frouxo (≥ 93% / ≤ 7%, que cobre mais desde a semana 3) |
 | D14 | 15/09 19:54 | **Aceitar os falsos positivos da regra por palavra-chave** (0,7% dos tickets de TI vão para humano à toa, tipo "cancel meeting") | **Fabio** | Alternativas mostradas: usar só o campo de tipo (zera o falso positivo, mas quem erra o tipo tem o reembolso roteado pela IA) ou aplicar a palavra-chave só em confiança baixa. Escolheu errar para o lado seguro, coerente com D3 |
 | D15 | 15/09 19:54 | Ordem de execução: **formulário de compras → triagem → resposta gêmea** | **Fabio** (confirmou a proposta da IA, vendo as alternativas) | Alternativas mostradas: triagem primeiro (maior ganho isolado, 34,7 h/mês, e é o que o brief pede) ou só instrumentar por 6 semanas antes de automatizar qualquer coisa |
+| D16 | 15/09 20:40 | Publicar o protótipo na Vercel e pôr o link no README | **Fabio** | Pedido dele depois de ver o PR aberto. O enunciado pede "não quero só um PowerPoint, quero ver algo rodando": o link dispensa o avaliador de rodar qualquer coisa. Exportação estática, sem back-end nem dado pessoal |
 
 ## Checkpoint 3 — respostas literais do Fabio (15/09 19:54), sobre as decisões de operação
 

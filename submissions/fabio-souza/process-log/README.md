@@ -4,8 +4,8 @@ Como a IA foi usada, quem decidiu o quê e onde ela errou. Escrito durante o tra
 
 | Arquivo | O que tem |
 |---|---|
-| [`decisoes.md`](decisoes.md) | As 15 decisões, cada uma com **quem decidiu**, e as respostas literais do Fabio nos três checkpoints |
-| [`diario.md`](diario.md) | A linha do tempo, das 15:30 às 19:54 |
+| [`decisoes.md`](decisoes.md) | As 16 decisões, cada uma com **quem decidiu**, e as respostas literais do Fabio nos três checkpoints |
+| [`diario.md`](diario.md) | A linha do tempo, das 15:30 às 20:40 |
 | [`hipoteses-pre-registradas.md`](hipoteses-pre-registradas.md) | Hipóteses e regras de decisão escritas **antes** da análise |
 | [`erros-da-ia.md`](erros-da-ia.md) | 17 erros da IA: 9 que mudaram uma conclusão, 8 pegos antes de virarem problema |
 | [`screenshots/`](screenshots) | 9 capturas do protótipo rodando |
